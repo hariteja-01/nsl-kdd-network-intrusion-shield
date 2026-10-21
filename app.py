@@ -584,9 +584,7 @@ with tab3:
             [0.02, 0.13, 0.21, 0.33, 0.31, 0.42, 0.71, 1.0],
         ])
         fig_corr = px.imshow(corr, x=features, y=features, color_continuous_scale="RdBu_r", zmin=-1, zmax=1, text_auto=".2f")
-        fig_corr.update_layout(height=400, margin=dict(l=10,r=10,t=40,b=80), title="Feature Correlation (Pearson) - Why Naive Bayes Struggles", title_font=dict(color="#0F172A"), paper_bgcolor="white", plot_bgcolor="white", font=dict(color="#0F172A"), hoverlabel=dict(bgcolor="#0F172A", font_color="white"), xaxis=dict(tickfont=dict(color="#0F172A")), yaxis=dict(tickfont=dict(color="#0F172A")))
-        for ann in fig_corr.layout.annotations:
-            ann.font.color = "#0F172A"
+        fig_corr.update_layout(height=400, margin=dict(l=10,r=10,t=40,b=80), title="Feature Correlation (Pearson) - Why Naive Bayes Struggles", title_font=dict(color="#0F172A"), paper_bgcolor="white", plot_bgcolor="white", font=dict(color="#0F172A"), hoverlabel=dict(bgcolor="#0F172A", font_color="white"), xaxis=dict(tickfont=dict(color="#0F172A", size=11), title_font=dict(color="#0F172A"), gridcolor="#E2E8F0", linecolor="#0F172A"), yaxis=dict(tickfont=dict(color="#0F172A", size=11), title_font=dict(color="#0F172A"), gridcolor="#E2E8F0", linecolor="#0F172A"), coloraxis_colorbar=dict(tickfont=dict(color="#0F172A"), title_font=dict(color="#0F172A")))
         st.plotly_chart(fig_corr, use_container_width=True, config={'displayModeBar': False})
         st.markdown("<div class='visible-help'><b>Note:</b> Blue indicates positive correlation, red indicates negative. Strong linkage between serror and same_srv explains lower Naive Bayes performance.</div>", unsafe_allow_html=True)
     with g2:
@@ -610,7 +608,7 @@ with tab3:
         st.markdown("<div class='visible-help'><b>Note:</b> 4 host features explain 84 percent of variance.</div>", unsafe_allow_html=True)
     with c2:
         fig_imp = px.bar(x=[247.0, 0.2569, 0.0275, 0.0005], y=["same_srv_rate","dst_host_count","count","srv_count"], orientation="h", color=[247.0, 0.2569, 0.0275, 0.0005], color_continuous_scale="Blues")
-        fig_imp.update_layout(height=300, margin=dict(l=10,r=10,t=40,b=10), title="What matters most for regression? (coefficients)", title_font=dict(color="#0F172A"), coloraxis_showscale=False, paper_bgcolor="white", plot_bgcolor="white", font=dict(color="#0F172A"), hoverlabel=dict(bgcolor="#0F172A", font_color="white"), xaxis=dict(color="#0F172A"), yaxis=dict(color="#0F172A"))
+        fig_imp.update_layout(height=300, margin=dict(l=10,r=10,t=40,b=10), title="What matters most for regression? (coefficients)", title_font=dict(color="#0F172A", size=13), coloraxis_showscale=False, paper_bgcolor="white", plot_bgcolor="white", font=dict(color="#0F172A", family="Inter"), hoverlabel=dict(bgcolor="#0F172A", font_color="white"), xaxis=dict(tickfont=dict(color="#0F172A", size=11), title_font=dict(color="#0F172A"), gridcolor="#E2E8F0", linecolor="#0F172A"), yaxis=dict(tickfont=dict(color="#0F172A", size=11), title_font=dict(color="#0F172A"), gridcolor="#E2E8F0", linecolor="#0F172A"))
         st.plotly_chart(fig_imp, use_container_width=True, config={'displayModeBar': False})
     with st.expander("Metric Interpretation", expanded=False):
         st.write("""
@@ -663,11 +661,6 @@ with tab4:
           </p>
         </div>
         """, unsafe_allow_html=True)
-    st.markdown("""
-    <div class="card" style="text-align:center; background: linear-gradient(180deg, #0F172A, #1E293B) !important; color:white !important; border:0 !important;">
-      <div style="font-size:12px; opacity:0.9; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; color:white !important;">INT315 Cluster Computing - LPU</div>
-      <div style="font-size:20px; font-weight:800; margin-top:6px; letter-spacing:-0.02em; color:white !important;">Built with Care - Ready for Top Evaluation</div>
-      <div style="font-size:12px; opacity:0.85; margin-top:6px; color:white !important;">This demo mirrors the Spark pipeline exactly. All results from Colab execution (Java 1.8.0_504, Spark 3.5.9).</div>
-    </div>
-    """, unsafe_allow_html=True)
+    # Footer removed as requested - clean professional ending
+    st.markdown("<div style='text-align:center; padding:14px; color:#64748B; font-size:12px;'>Report contains 12 sections, 24 pages - Streamlit demo mirrors Spark pipeline results.</div>", unsafe_allow_html=True)
 
