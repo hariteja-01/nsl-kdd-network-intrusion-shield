@@ -1034,7 +1034,7 @@ with tab_sim:
     active_p = PRESETS[st.session_state.current_preset_key]
     st.markdown(f"""
     <div style="background:{active_preset_bg}; border:{active_preset_border}; border-radius:12px; padding:11px 15px; margin-bottom:16px; font-size:12.5px; color:{active_preset_text};">
-        <span style="color:{active_preset_kicker}; font-weight:800; text-transform:uppercase; letter-spacing:0.04em;">ACTIVE PRESET:</span> <b>{active_p['title']}</b> — {active_p['desc']}
+        <span style="color:{active_preset_kicker}; font-weight:800; text-transform:uppercase; letter-spacing:0.04em;">ACTIVE PRESET:</span> <b>{active_p['title']}</b> - {active_p['desc']}
     </div>
     """, unsafe_allow_html=True)
 
@@ -1187,7 +1187,7 @@ with tab_sim:
         <div class="standby-box">
             <div class="standby-icon">🛡️</div>
             <div style="font-size:16px; font-weight:800; color:{text_main};">
-                STANDBY — Awaiting Distributed Packet Inspection
+                STANDBY - Awaiting Distributed Packet Inspection
             </div>
             <div style="font-size:12.5px; color:{text_secondary}; margin-top:6px; max-width:620px; margin-left:auto; margin-right:auto; line-height:1.6; font-weight:500;">
                 The parameters above are staged for evaluation. Click <b>⚡ EXECUTE DISTRIBUTED INFERENCE</b> above
@@ -1203,7 +1203,7 @@ with tab_sim:
             if res["is_attack"]:
                 st.markdown(f"""
                 <div class="threat-banner-attack">
-                    <div class="decision-kicker" style="color:#DC2626;">SECURITY ALERT — INTRUSION DETECTED</div>
+                    <div class="decision-kicker" style="color:#DC2626;">SECURITY ALERT - INTRUSION DETECTED</div>
                     <div class="decision-title" style="color:#DC2626;">
                         🚨 MALICIOUS NETWORK ATTACK IDENTIFIED
                     </div>
@@ -1239,7 +1239,7 @@ with tab_sim:
             else:
                 st.markdown(f"""
                 <div class="threat-banner-safe">
-                    <div class="decision-kicker" style="color:#059669;">TELEMETRY VERIFIED — NORMAL FLOW</div>
+                    <div class="decision-kicker" style="color:#059669;">TELEMETRY VERIFIED - NORMAL FLOW</div>
                     <div class="decision-title" style="color:#059669;">
                         ✅ BENIGN ENTERPRISE TRAFFIC
                     </div>
@@ -1315,7 +1315,7 @@ with tab_sim:
             <div class="soc-kpi-card" style="margin-top:-10px;">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <span class="soc-badge" style="background:{m_info['color']}22; border-color:{m_info['color']}66; color:{text_main};">
-                        Rank #{m_info['rank']} — {m_info['badge']}
+                        Rank #{m_info['rank']} - {m_info['badge']}
                     </span>
                     <span style="font-size:11px; font-family:'JetBrains Mono'; color:#10B981; font-weight:700;">
                         CV Δ {m_info['delta']:.6f}
@@ -1770,7 +1770,7 @@ with tab_arch:
 # ------------------------------------------------------------------------------
 st.markdown(f"""
 <div style="text-align:center; padding:24px 0 10px 0; border-top:{card_border}; margin-top:30px; font-size:11.5px; color:{text_muted}; font-weight:600;">
-    <b>AegisNet Shield</b> — Enterprise Distributed Network Intrusion Detection & Threat Intelligence Platform<br/>
+    <b>AegisNet Shield</b>: Enterprise Distributed Network Intrusion Detection & Threat Intelligence Platform<br/>
     Powered by Apache Spark 3.5.9 MLlib • Verified against 148,517 NSL-KDD Network Flows
 </div>
 """, unsafe_allow_html=True)
