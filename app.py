@@ -35,7 +35,7 @@ MODEL_REGISTRY = {
         "params": "numTrees=60, maxDepth=12, impurity=gini",
         "official_test_acc": 0.771,
         "cm": {"tn": 13481, "fp": 13, "fn": 61, "tp": 11702},
-        "color": "#6366F1",
+        "color": "#4F46E5",
         "rank": 1,
         "badge": "Top Performer",
         "arch_desc": "Distributed ensemble of 60 decision trees. Robust against error-rate collinearity with near-zero false positive rate (13 FP out of 13,494 normal samples)."
@@ -197,7 +197,6 @@ def init_app_state():
     if "inspection_result" not in st.session_state:
         st.session_state.inspection_result = None
 
-    # Sync default widget values if not set
     p = PRESETS[st.session_state.current_preset_key]
     widget_defaults = {
         "cfg_protocol": p["protocol"],
@@ -217,7 +216,6 @@ def init_app_state():
             st.session_state[k] = v
 
 def apply_scenario_preset(preset_key):
-    """Sets session state keys explicitly so widgets update immediately on rerun."""
     p = PRESETS[preset_key]
     st.session_state.current_preset_key = preset_key
     st.session_state["cfg_protocol"] = p["protocol"]
@@ -230,71 +228,104 @@ def apply_scenario_preset(preset_key):
     st.session_state["cfg_serror"] = float(p["serror"])
     st.session_state["cfg_same_srv"] = float(p["same_srv"])
     st.session_state["cfg_dst_host"] = int(p["dst_host"])
-    # Reset inspection state so user can trigger the live analysis intentionally
     st.session_state.has_inspected = False
     st.session_state.inspection_result = None
 
 init_app_state()
 
 # ------------------------------------------------------------------------------
-# 5. DYNAMIC DUAL-THEME ENGINE (21ST.DEV ENTERPRISE STYLING)
+# 5. DYNAMIC DUAL-THEME ENGINE (21ST.DEV HIGH CONTRAST & POLISH)
 # ------------------------------------------------------------------------------
 is_dark = (st.session_state.theme_mode == "Dark Cyber")
 
 if is_dark:
     bg_app = "#06090E"
     bg_gradient = """
-        radial-gradient(1200px 600px at 50% -50px, rgba(99, 102, 241, 0.16), transparent 70%),
-        radial-gradient(900px 500px at 90% 20%, rgba(14, 165, 233, 0.09), transparent 60%),
+        radial-gradient(1200px 600px at 50% -50px, rgba(99, 102, 241, 0.18), transparent 70%),
+        radial-gradient(900px 500px at 90% 20%, rgba(14, 165, 233, 0.10), transparent 60%),
         linear-gradient(180deg, #06090E 0%, #090E17 50%, #0B111D 100%)
     """
-    card_bg = "rgba(13, 19, 33, 0.85)"
-    card_border = "rgba(255, 255, 255, 0.08)"
-    kpi_bg = "rgba(15, 23, 42, 0.65)"
-    text_main = "#F8FAFC"
-    text_secondary = "#CBD5E1"
+    card_bg = "rgba(13, 19, 33, 0.88)"
+    card_border = "1px solid rgba(255, 255, 255, 0.1)"
+    kpi_bg = "rgba(15, 23, 42, 0.75)"
+    text_main = "#FFFFFF"
+    text_secondary = "#E2E8F0"
     text_muted = "#94A3B8"
     input_bg = "rgba(15, 23, 42, 0.85)"
-    input_border = "rgba(255, 255, 255, 0.12)"
-    tab_list_bg = "rgba(13, 19, 33, 0.9)"
-    tab_active_bg = "linear-gradient(135deg, rgba(99, 102, 241, 0.3) 0%, rgba(14, 165, 233, 0.3) 100%)"
-    tab_active_border = "rgba(99, 102, 241, 0.6)"
-    pill_bg = "rgba(15, 23, 42, 0.7)"
-    pill_border = "rgba(255, 255, 255, 0.08)"
+    input_border = "1.5px solid rgba(255, 255, 255, 0.14)"
+
+    tab_list_bg = "rgba(13, 19, 33, 0.95)"
+    tab_unselected_bg = "rgba(15, 23, 42, 0.6)"
+    tab_unselected_border = "1px solid rgba(255, 255, 255, 0.08)"
+    tab_unselected_text = "#CBD5E1"
+    tab_hover_bg = "rgba(255, 255, 255, 0.08)"
+    tab_active_bg = "linear-gradient(135deg, rgba(99, 102, 241, 0.45) 0%, rgba(14, 165, 233, 0.45) 100%)"
+    tab_active_border = "rgba(99, 102, 241, 0.75)"
+
+    btn_sec_bg = "rgba(15, 23, 42, 0.75)"
+    btn_sec_border = "1.5px solid rgba(255, 255, 255, 0.14)"
+    btn_sec_text = "#F8FAFC"
+    btn_sec_hover_bg = "rgba(99, 102, 241, 0.22)"
+
+    pill_bg = "rgba(15, 23, 42, 0.6)"
+    pill_border = "1px solid rgba(255, 255, 255, 0.08)"
+
+    active_preset_bg = "rgba(15, 23, 42, 0.7)"
+    active_preset_border = "1.5px solid rgba(99, 102, 241, 0.4)"
+    active_preset_text = "#E2E8F0"
+    active_preset_kicker = "#818CF8"
+
     plotly_paper = "rgba(0,0,0,0)"
     plotly_font = "#CBD5E1"
-    plotly_grid = "rgba(255, 255, 255, 0.07)"
+    plotly_grid = "rgba(255, 255, 255, 0.08)"
 else:
     bg_app = "#F8FAFC"
     bg_gradient = """
-        radial-gradient(1000px 500px at 50% -50px, rgba(99, 102, 241, 0.08), transparent 70%),
-        radial-gradient(800px 500px at 90% 15%, rgba(14, 165, 233, 0.06), transparent 60%),
-        linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)
+        radial-gradient(1100px 550px at 50% -50px, rgba(99, 102, 241, 0.10), transparent 70%),
+        radial-gradient(850px 500px at 90% 15%, rgba(14, 165, 233, 0.08), transparent 60%),
+        linear-gradient(180deg, #F8FAFC 0%, #EEF2F6 100%)
     """
     card_bg = "#FFFFFF"
-    card_border = "rgba(15, 23, 42, 0.12)"
+    card_border = "1.5px solid #CBD5E1"
     kpi_bg = "#FFFFFF"
     text_main = "#0F172A"
     text_secondary = "#1E293B"
     text_muted = "#475569"
     input_bg = "#FFFFFF"
-    input_border = "rgba(15, 23, 42, 0.2)"
+    input_border = "1.5px solid #94A3B8"
+
     tab_list_bg = "#E2E8F0"
-    tab_active_bg = "#0F172A"
-    tab_active_border = "#0F172A"
-    pill_bg = "#F1F5F9"
-    pill_border = "rgba(15, 23, 42, 0.1)"
+    tab_unselected_bg = "#FFFFFF"
+    tab_unselected_border = "1.5px solid #CBD5E1"
+    tab_unselected_text = "#0F172A"
+    tab_hover_bg = "#F1F5F9"
+    tab_active_bg = "linear-gradient(135deg, #4338CA 0%, #0284C7 100%)"
+    tab_active_border = "#4338CA"
+
+    btn_sec_bg = "#FFFFFF"
+    btn_sec_border = "1.5px solid #94A3B8"
+    btn_sec_text = "#0F172A"
+    btn_sec_hover_bg = "#EFF6FF"
+
+    pill_bg = "#F8FAFC"
+    pill_border = "1.5px solid #E2E8F0"
+
+    active_preset_bg = "#EFF6FF"
+    active_preset_border = "1.5px solid #93C5FD"
+    active_preset_text = "#1E3A8A"
+    active_preset_kicker = "#2563EB"
+
     plotly_paper = "#FFFFFF"
     plotly_font = "#0F172A"
-    plotly_grid = "rgba(15, 23, 42, 0.08)"
+    plotly_grid = "rgba(15, 23, 42, 0.1)"
 
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap');
 
-html, body, [class*="css"] {{
+/* Master Reset */
+html, body, [class*="css"], .stMarkdown, .stText, p, span, label, div {{
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    color: {text_main};
 }}
 code, kbd, samp, pre, .mono-font {{
     font-family: 'JetBrains Mono', monospace !important;
@@ -319,10 +350,10 @@ code, kbd, samp, pre, .mono-font {{
 /* Top Hero Section */
 .soc-hero {{
     background: {card_bg};
-    border: 1px solid {card_border};
+    border: {card_border};
     border-radius: 20px;
     padding: 22px 26px;
-    box-shadow: 0 16px 36px -12px rgba(0, 0, 0, {0.5 if is_dark else 0.08});
+    box-shadow: 0 16px 36px -12px rgba(0, 0, 0, {0.45 if is_dark else 0.08});
     backdrop-filter: blur(20px);
     position: relative;
     overflow: hidden;
@@ -332,7 +363,7 @@ code, kbd, samp, pre, .mono-font {{
     content: "";
     position: absolute;
     top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.9), rgba(14, 165, 233, 0.9), transparent);
+    background: linear-gradient(90deg, transparent, #4F46E5, #0284C7, transparent);
 }}
 .hero-top-bar {{
     display: flex;
@@ -346,12 +377,12 @@ code, kbd, samp, pre, .mono-font {{
     align-items: center;
     gap: 8px;
     background: {kpi_bg};
-    border: 1px solid {card_border};
+    border: {card_border};
     color: {text_main};
     padding: 5px 14px;
     border-radius: 9999px;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }}
@@ -375,6 +406,7 @@ code, kbd, samp, pre, .mono-font {{
     font-size: 11.5px;
     color: {text_muted};
     font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
 }}
 .soc-hero h1 {{
     margin: 12px 0 6px 0;
@@ -386,16 +418,17 @@ code, kbd, samp, pre, .mono-font {{
 }}
 .soc-hero h1 em {{
     font-style: normal;
-    background: linear-gradient(135deg, #0284C7 0%, #6366F1 50%, #9333EA 100%);
+    background: linear-gradient(135deg, #0284C7 0%, #4F46E5 50%, #9333EA 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }}
 .soc-hero p.sub {{
     margin: 0;
-    color: {text_muted};
+    color: {text_secondary};
     font-size: 13.5px;
     line-height: 1.6;
     max-width: 950px;
+    font-weight: 500;
 }}
 .soc-kpi-grid {{
     display: grid;
@@ -408,19 +441,19 @@ code, kbd, samp, pre, .mono-font {{
 }}
 .soc-kpi-card {{
     background: {kpi_bg};
-    border: 1px solid {card_border};
+    border: {card_border};
     border-radius: 14px;
     padding: 13px 15px;
     transition: all 0.2s ease;
     box-shadow: 0 4px 12px rgba(0,0,0,{0.2 if is_dark else 0.04});
 }}
 .soc-kpi-card:hover {{
-    border-color: rgba(99, 102, 241, 0.4);
+    border-color: #4F46E5;
     transform: translateY(-2px);
 }}
 .soc-kpi-label {{
     font-size: 10.5px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: {text_muted};
@@ -438,14 +471,15 @@ code, kbd, samp, pre, .mono-font {{
 }}
 .soc-kpi-sub {{
     font-size: 11.5px;
-    color: {text_muted};
+    color: {text_secondary};
     margin-top: 2px;
+    font-weight: 500;
 }}
 
 /* Glass Panels */
 .glass-panel {{
     background: {card_bg};
-    border: 1px solid {card_border};
+    border: {card_border};
     border-radius: 18px;
     padding: 18px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, {0.3 if is_dark else 0.05});
@@ -461,11 +495,11 @@ code, kbd, samp, pre, .mono-font {{
     width: 4px;
     height: 18px;
     border-radius: 999px;
-    background: linear-gradient(180deg, #6366F1, #0284C7);
+    background: linear-gradient(180deg, #4F46E5, #0284C7);
 }}
 .panel-title {{
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 800;
     color: {text_main};
     margin: 0;
 }}
@@ -473,15 +507,18 @@ code, kbd, samp, pre, .mono-font {{
     font-size: 11.5px;
     color: {text_muted};
     margin: 0 0 0 auto;
+    font-weight: 500;
 }}
 
-/* Tabs Styling */
+/* ========================================================= */
+/* TABS STYLING - HIGH CONTRAST IN BOTH LIGHT & DARK MODES   */
+/* ========================================================= */
 .stTabs [data-baseweb="tab-list"] {{
     gap: 8px !important;
     background: {tab_list_bg} !important;
     padding: 6px !important;
     border-radius: 14px !important;
-    border: 1px solid {card_border} !important;
+    border: {card_border} !important;
     width: 100% !important;
     margin-bottom: 16px !important;
 }}
@@ -489,31 +526,119 @@ code, kbd, samp, pre, .mono-font {{
     flex: 1 !important;
     border-radius: 10px !important;
     padding: 10px 16px !important;
-    font-weight: 600 !important;
-    font-size: 13px !important;
-    color: {text_muted} !important;
-    background: transparent !important;
-    border: none !important;
+    background: {tab_unselected_bg} !important;
+    border: {tab_unselected_border} !important;
     transition: all 0.2s ease !important;
     text-align: center !important;
 }}
+.stTabs [data-baseweb="tab"] p,
+.stTabs [data-baseweb="tab"] span,
+.stTabs [data-baseweb="tab"] div {{
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    color: {tab_unselected_text} !important;
+    opacity: 1 !important;
+}}
 .stTabs [data-baseweb="tab"]:hover {{
+    background: {tab_hover_bg} !important;
+}}
+.stTabs [data-baseweb="tab"]:hover p,
+.stTabs [data-baseweb="tab"]:hover span {{
     color: {text_main} !important;
-    background: rgba(99, 102, 241, 0.1) !important;
 }}
 .stTabs [aria-selected="true"] {{
     background: {tab_active_bg} !important;
-    color: {"#FFFFFF" if is_dark else "#FFFFFF"} !important;
-    border: 1px solid {tab_active_border} !important;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25) !important;
+    border: 1.5px solid {tab_active_border} !important;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3) !important;
+}}
+.stTabs [aria-selected="true"] p,
+.stTabs [aria-selected="true"] span,
+.stTabs [aria-selected="true"] div {{
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+}}
+.stTabs [data-baseweb="tab-highlight"],
+.stTabs [data-baseweb="tab-border"] {{
+    display: none !important;
 }}
 .stTabs [data-baseweb="tab-panel"] {{
     padding-top: 4px !important;
 }}
 
-/* Streamlit Inputs */
-[data-testid="stWidgetLabel"] p {{
-    font-size: 12px !important;
+/* ========================================================= */
+/* BUTTONS - HIGH CONTRAST SECONDARY & PRIMARY STYLING       */
+/* ========================================================= */
+.stButton > button {{
+    border-radius: 11px !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    letter-spacing: 0.01em !important;
+    transition: all 0.2s ease !important;
+    min-height: 42px !important;
+}}
+.stButton > button[kind="secondary"] {{
+    background: {btn_sec_bg} !important;
+    border: {btn_sec_border} !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,{0.2 if is_dark else 0.05}) !important;
+}}
+.stButton > button[kind="secondary"] p,
+.stButton > button[kind="secondary"] span {{
+    color: {btn_sec_text} !important;
+    font-weight: 700 !important;
+}}
+.stButton > button[kind="secondary"]:hover {{
+    background: {btn_sec_hover_bg} !important;
+    border-color: #4F46E5 !important;
+    transform: translateY(-1px) !important;
+}}
+.stButton > button[kind="secondary"]:hover p,
+.stButton > button[kind="secondary"]:hover span {{
+    color: {"#FFFFFF" if is_dark else "#4F46E5"} !important;
+}}
+.stButton > button[kind="primary"] {{
+    background: linear-gradient(135deg, #4F46E5 0%, #0284C7 100%) !important;
+    border: 1.5px solid #4F46E5 !important;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+}}
+.stButton > button[kind="primary"] p,
+.stButton > button[kind="primary"] span {{
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+}}
+.stButton > button[kind="primary"]:hover {{
+    background: linear-gradient(135deg, #4338CA 0%, #0369A1 100%) !important;
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45) !important;
+    transform: translateY(-1px) !important;
+}}
+
+/* Segmented Theme Switcher */
+div[data-testid="stSegmentedControl"] {{
+    background: {kpi_bg} !important;
+    border: {card_border} !important;
+    border-radius: 12px !important;
+    padding: 3px !important;
+}}
+div[data-testid="stSegmentedControl"] button {{
+    border-radius: 9px !important;
+    font-weight: 700 !important;
+}}
+div[data-testid="stSegmentedControl"] button p {{
+    color: {text_muted} !important;
+    font-weight: 700 !important;
+}}
+div[data-testid="stSegmentedControl"] button[aria-checked="true"] {{
+    background: {"#1E293B" if is_dark else "#0F172A"} !important;
+    border: 1px solid {"rgba(255,255,255,0.15)" if is_dark else "#0F172A"} !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+}}
+div[data-testid="stSegmentedControl"] button[aria-checked="true"] p {{
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+}}
+
+/* Input Labels & Controls */
+[data-testid="stWidgetLabel"] p, label p {{
+    font-size: 12.5px !important;
     font-weight: 700 !important;
     color: {text_main} !important;
     letter-spacing: 0.01em !important;
@@ -521,19 +646,22 @@ code, kbd, samp, pre, .mono-font {{
 }}
 div[data-baseweb="select"] > div {{
     background-color: {input_bg} !important;
-    border: 1px solid {input_border} !important;
+    border: {input_border} !important;
     border-radius: 10px !important;
-    color: {text_main} !important;
-    min-height: 40px !important;
+    min-height: 42px !important;
 }}
-div[data-baseweb="select"] span {{
+div[data-baseweb="select"] span,
+div[data-baseweb="select"] div {{
     color: {text_main} !important;
     font-size: 13px !important;
     font-weight: 600 !important;
 }}
+div[data-baseweb="select"] svg {{
+    fill: {text_main} !important;
+}}
 div[data-baseweb="popover"] ul {{
     background-color: {card_bg} !important;
-    border: 1px solid {card_border} !important;
+    border: {card_border} !important;
     border-radius: 12px !important;
     padding: 6px !important;
 }}
@@ -541,38 +669,51 @@ div[data-baseweb="popover"] li {{
     border-radius: 8px !important;
     color: {text_main} !important;
     font-size: 12.5px !important;
+    font-weight: 600 !important;
+}}
+div[data-baseweb="popover"] li:hover {{
+    background-color: {"rgba(99, 102, 241, 0.18)" if is_dark else "#EFF6FF"} !important;
+    color: {"#FFFFFF" if is_dark else "#4F46E5"} !important;
 }}
 
 /* Sliders */
 [data-testid="stSlider"] {{
     background: {pill_bg} !important;
-    border: 1px solid {card_border} !important;
-    padding: 8px 12px !important;
+    border: {card_border} !important;
+    padding: 10px 14px !important;
     border-radius: 12px !important;
     margin-bottom: 8px !important;
 }}
 [data-testid="stSlider"] div[data-testid="stTickBar"] {{
     color: {text_muted} !important;
+    font-weight: 600 !important;
+}}
+[data-testid="stSlider"] div[data-testid="stTickBarMin"],
+[data-testid="stSlider"] div[data-testid="stTickBarMax"] {{
+    color: {text_muted} !important;
+    font-weight: 600 !important;
 }}
 
 /* Parameter Information Capsule */
 .param-pill {{
     background: {pill_bg};
-    border: 1px solid {pill_border};
+    border: {pill_border};
     border-radius: 8px;
-    padding: 6px 10px;
+    padding: 7px 10px;
     font-size: 11px;
     color: {text_muted};
     margin-top: 4px;
     line-height: 1.4;
+    font-weight: 500;
 }}
 .param-pill b {{
     color: {text_secondary};
+    font-weight: 700;
 }}
 
 /* Threat Decision Banners */
 .threat-banner-safe {{
-    background: {"linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 78, 59, 0.25) 100%)" if is_dark else "#F0FDF4"};
+    background: {"linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, rgba(6, 78, 59, 0.28) 100%)" if is_dark else "#F0FDF4"};
     border: 2px solid #10B981;
     border-radius: 16px;
     padding: 20px;
@@ -581,7 +722,7 @@ div[data-baseweb="popover"] li {{
     animation: fadeIn 0.4s ease-out;
 }}
 .threat-banner-attack {{
-    background: {"linear-gradient(135deg, rgba(239, 68, 68, 0.16) 0%, rgba(127, 29, 29, 0.28) 100%)" if is_dark else "#FEF2F2"};
+    background: {"linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(127, 29, 29, 0.32) 100%)" if is_dark else "#FEF2F2"};
     border: 2px solid #EF4444;
     border-radius: 16px;
     padding: 20px;
@@ -618,13 +759,14 @@ div[data-baseweb="popover"] li {{
     color: {text_secondary};
     margin-top: 6px;
     line-height: 1.6;
+    font-weight: 500;
 }}
 
 /* Confidence Track */
 .conf-track {{
     height: 9px;
     border-radius: 999px;
-    background: {"rgba(255, 255, 255, 0.1)" if is_dark else "#E2E8F0"};
+    background: {"rgba(255, 255, 255, 0.12)" if is_dark else "#E2E8F0"};
     overflow: hidden;
     margin-top: 8px;
 }}
@@ -666,22 +808,48 @@ div[data-baseweb="popover"] li {{
     align-items: center;
     gap: 16px;
     background: {card_bg};
-    border: 1px solid rgba(99, 102, 241, 0.4);
+    border: 1.5px solid #4F46E5;
     border-radius: 14px;
     padding: 16px 20px;
     margin: 16px 0;
-    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.15);
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2);
 }}
 .anim-spinner {{
     width: 24px;
     height: 24px;
-    border: 3px solid rgba(99, 102, 241, 0.2);
-    border-top-color: #6366F1;
+    border: 3px solid rgba(79, 70, 229, 0.25);
+    border-top-color: #4F46E5;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
 }}
 @keyframes spin {{
     to {{ transform: rotate(360deg); }}
+}}
+
+/* Dataframe & Expanders */
+[data-testid="stDataFrame"] {{
+    background: {card_bg} !important;
+    border: {card_border} !important;
+    border-radius: 14px !important;
+}}
+[data-testid="stExpander"] {{
+    background: {card_bg} !important;
+    border: {card_border} !important;
+    border-radius: 12px !important;
+}}
+[data-testid="stExpander"] summary {{
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    color: {text_main} !important;
+}}
+[data-testid="stExpander"] summary span,
+[data-testid="stExpander"] summary p {{
+    color: {text_main} !important;
+    font-weight: 700 !important;
+}}
+[data-testid="stExpander"] div[data-testid="stExpanderDetails"] p,
+[data-testid="stExpander"] div[data-testid="stExpanderDetails"] li {{
+    color: {text_secondary} !important;
 }}
 </style>
 """, unsafe_allow_html=True)
@@ -692,7 +860,7 @@ div[data-baseweb="popover"] li {{
 hero_col1, hero_col2 = st.columns([1.6, 0.4])
 with hero_col2:
     theme_sel = st.segmented_control(
-        "Theme",
+        "Display Mode",
         ["Dark Cyber", "Light Enterprise"],
         default=st.session_state.theme_mode,
         key="theme_mode_selector"
@@ -728,7 +896,7 @@ st.markdown(f"""
         </div>
         <div class="soc-kpi-card">
             <div class="soc-kpi-label">Peak Detection Accuracy <span>RF</span></div>
-            <div class="soc-kpi-value" style="color:#6366F1;">99.71%</div>
+            <div class="soc-kpi-value" style="color:#4F46E5;">99.71%</div>
             <div class="soc-kpi-sub">Random Forest (F1: 0.9971)</div>
         </div>
         <div class="soc-kpi-card">
@@ -837,9 +1005,9 @@ with tab_sim:
     """, unsafe_allow_html=True)
 
     # Preset Quick Select Bar
-    st.markdown(f"<div style='font-size:12px; font-weight:700; color:{text_muted}; margin-bottom:8px;'>QUICK SCENARIO PRESETS:</div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size:12px; font-weight:800; color:{text_secondary}; margin-bottom:8px;'>QUICK SCENARIO PRESETS:</div>", unsafe_allow_html=True)
     p_cols = st.columns(5)
-    
+
     preset_keys = list(PRESETS.keys())
     for idx, p_key in enumerate(preset_keys):
         p_data = PRESETS[p_key]
@@ -852,8 +1020,8 @@ with tab_sim:
 
     active_p = PRESETS[st.session_state.current_preset_key]
     st.markdown(f"""
-    <div style="background:{kpi_bg}; border:1px solid rgba(99, 102, 241, 0.35); border-radius:12px; padding:10px 14px; margin-bottom:16px; font-size:12px; color:{text_secondary};">
-        <span style="color:#6366F1; font-weight:700;">ACTIVE PRESET:</span> <b>{active_p['title']}</b> — {active_p['desc']}
+    <div style="background:{active_preset_bg}; border:{active_preset_border}; border-radius:12px; padding:11px 15px; margin-bottom:16px; font-size:12.5px; color:{active_preset_text};">
+        <span style="color:{active_preset_kicker}; font-weight:800; text-transform:uppercase; letter-spacing:0.04em;">ACTIVE PRESET:</span> <b>{active_p['title']}</b> — {active_p['desc']}
     </div>
     """, unsafe_allow_html=True)
 
@@ -864,7 +1032,7 @@ with tab_sim:
         st.markdown(f"""
         <div class="glass-panel">
             <div class="panel-header">
-                <div class="panel-indicator" style="background:#6366F1;"></div>
+                <div class="panel-indicator" style="background:#4F46E5;"></div>
                 <h4 class="panel-title">1. Transport Layer Specs</h4>
             </div>
         """, unsafe_allow_html=True)
@@ -963,10 +1131,10 @@ with tab_sim:
             <div class="inspection-anim-box">
                 <div class="anim-spinner"></div>
                 <div>
-                    <div style="font-size:11px; font-weight:800; color:#6366F1; letter-spacing:0.08em; text-transform:uppercase;">
+                    <div style="font-size:11px; font-weight:800; color:#4F46E5; letter-spacing:0.08em; text-transform:uppercase;">
                         {step_title} [{pct}%]
                     </div>
-                    <div style="font-size:13px; font-weight:600; color:{text_main}; margin-top:2px;">
+                    <div style="font-size:13px; font-weight:700; color:{text_main}; margin-top:2px;">
                         {step_desc}
                     </div>
                 </div>
@@ -1008,7 +1176,7 @@ with tab_sim:
             <div style="font-size:16px; font-weight:800; color:{text_main};">
                 STANDBY — Awaiting Distributed Packet Inspection
             </div>
-            <div style="font-size:12.5px; color:{text_muted}; margin-top:6px; max-width:620px; margin-left:auto; margin-right:auto; line-height:1.6;">
+            <div style="font-size:12.5px; color:{text_secondary}; margin-top:6px; max-width:620px; margin-left:auto; margin-right:auto; line-height:1.6; font-weight:500;">
                 The parameters above are staged for evaluation. Click <b>⚡ EXECUTE DISTRIBUTED INFERENCE</b> above
                 to run this 121-dimensional network vector through the <b>{sel_model.split(' (')[0]}</b> Spark MLlib pipeline.
             </div>
@@ -1031,7 +1199,7 @@ with tab_sim:
                         Calculated Anomaly Index: <b>{res['risk_score']:.2f}</b> (Detection Model Reliability: <b>{MODEL_REGISTRY[res['model']]['acc']*100:.2f}%</b>).
                     </div>
                     <div style="margin-top:14px;">
-                        <div style="display:flex; justify-content:space-between; font-size:11.5px; font-weight:700; color:#DC2626;">
+                        <div style="display:flex; justify-content:space-between; font-size:11.5px; font-weight:800; color:#DC2626;">
                             <span>ATTACK PROBABILITY</span>
                             <span>{res['attack_prob']*100:.1f}%</span>
                         </div>
@@ -1039,17 +1207,17 @@ with tab_sim:
                             <div class="conf-fill-attack" style="width: {res['attack_prob']*100:.1f}%;"></div>
                         </div>
                     </div>
-                    <div style="background:{kpi_bg}; border:1px solid {card_border}; border-radius:12px; padding:12px 14px; margin-top:14px;">
-                        <div style="font-size:11px; font-weight:700; color:{text_muted}; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">
+                    <div style="background:{kpi_bg}; border:{card_border}; border-radius:12px; padding:12px 14px; margin-top:14px;">
+                        <div style="font-size:11px; font-weight:800; color:{text_muted}; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">
                             Automated Incident Response Recommendations
                         </div>
-                        <div style="font-size:12px; color:{text_secondary}; margin-bottom:4px;">
+                        <div style="font-size:12px; color:{text_secondary}; margin-bottom:4px; font-weight:600;">
                             🛡️ <b>Automated Firewall Rule:</b> Inject eBPF drop rule for source CIDR on service <code>{res['service']}</code>.
                         </div>
-                        <div style="font-size:12px; color:{text_secondary}; margin-bottom:4px;">
+                        <div style="font-size:12px; color:{text_secondary}; margin-bottom:4px; font-weight:600;">
                             🔒 <b>TCP Rate Limiter:</b> Restrict maximum SYN packets per IP to 25 req/sec.
                         </div>
-                        <div style="font-size:12px; color:{text_secondary};">
+                        <div style="font-size:12px; color:{text_secondary}; font-weight:600;">
                             📋 <b>SIEM Dispatch:</b> High-priority incident logged to SOC triage queue.
                         </div>
                     </div>
@@ -1067,7 +1235,7 @@ with tab_sim:
                         Handshake state, payload ratios, and error rates conform to standard baseline patterns.
                     </div>
                     <div style="margin-top:14px;">
-                        <div style="display:flex; justify-content:space-between; font-size:11.5px; font-weight:700; color:#059669;">
+                        <div style="display:flex; justify-content:space-between; font-size:11.5px; font-weight:800; color:#059669;">
                             <span>SAFETY CONFIDENCE</span>
                             <span>{res['confidence']*100:.1f}%</span>
                         </div>
@@ -1075,14 +1243,14 @@ with tab_sim:
                             <div class="conf-fill-safe" style="width: {res['confidence']*100:.1f}%;"></div>
                         </div>
                     </div>
-                    <div style="background:{kpi_bg}; border:1px solid {card_border}; border-radius:12px; padding:12px 14px; margin-top:14px;">
-                        <div style="font-size:11px; font-weight:700; color:{text_muted}; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">
+                    <div style="background:{kpi_bg}; border:{card_border}; border-radius:12px; padding:12px 14px; margin-top:14px;">
+                        <div style="font-size:11px; font-weight:800; color:{text_muted}; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">
                             Traffic Compliance Status
                         </div>
-                        <div style="font-size:12px; color:{text_secondary}; margin-bottom:4px;">
+                        <div style="font-size:12px; color:{text_secondary}; margin-bottom:4px; font-weight:600;">
                             🟢 <b>Policy Check:</b> Conforms to permitted network security group (NSG) profiles.
                         </div>
-                        <div style="font-size:12px; color:{text_secondary};">
+                        <div style="font-size:12px; color:{text_secondary}; font-weight:600;">
                             ⚡ <b>Fast-Path Forwarding:</b> Packet admitted to edge routing gateway.
                         </div>
                     </div>
@@ -1114,7 +1282,7 @@ with tab_sim:
                     "bar": {"color": m_info["color"], "thickness": 0.3},
                     "bgcolor": kpi_bg,
                     "borderwidth": 1,
-                    "bordercolor": card_border,
+                    "bordercolor": "#CBD5E1" if not is_dark else "rgba(255,255,255,0.1)",
                     "steps": [
                         {"range": [90, 95], "color": "rgba(245, 158, 11, 0.15)"},
                         {"range": [95, 100], "color": "rgba(16, 185, 129, 0.15)"}
@@ -1136,26 +1304,26 @@ with tab_sim:
                     <span class="soc-badge" style="background:{m_info['color']}22; border-color:{m_info['color']}66; color:{text_main};">
                         Rank #{m_info['rank']} — {m_info['badge']}
                     </span>
-                    <span style="font-size:11px; font-family:'JetBrains Mono'; color:#10B981;">
+                    <span style="font-size:11px; font-family:'JetBrains Mono'; color:#10B981; font-weight:700;">
                         CV Δ {m_info['delta']:.6f}
                     </span>
                 </div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px; font-size:12px;">
-                    <div style="background:{pill_bg}; padding:8px; border-radius:8px; border:1px solid {pill_border};">
-                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase;">F1-Score</div>
-                        <div style="font-weight:700; color:{text_main}; font-size:15px; font-family:'JetBrains Mono';">{m_info['f1']:.4f}</div>
+                    <div style="background:{pill_bg}; padding:8px; border-radius:8px; border:{pill_border};">
+                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase; font-weight:700;">F1-Score</div>
+                        <div style="font-weight:800; color:{text_main}; font-size:15px; font-family:'JetBrains Mono';">{m_info['f1']:.4f}</div>
                     </div>
-                    <div style="background:{pill_bg}; padding:8px; border-radius:8px; border:1px solid {pill_border};">
-                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase;">5-Fold CV Acc</div>
-                        <div style="font-weight:700; color:{text_main}; font-size:15px; font-family:'JetBrains Mono';">{m_info['cv_acc']*100:.2f}%</div>
+                    <div style="background:{pill_bg}; padding:8px; border-radius:8px; border:{pill_border};">
+                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase; font-weight:700;">5-Fold CV Acc</div>
+                        <div style="font-weight:800; color:{text_main}; font-size:15px; font-family:'JetBrains Mono';">{m_info['cv_acc']*100:.2f}%</div>
                     </div>
-                    <div style="background:{pill_bg}; padding:8px; border-radius:8px; border:1px solid {pill_border};">
-                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase;">Precision</div>
-                        <div style="font-weight:700; color:{text_main}; font-size:15px; font-family:'JetBrains Mono';">{m_info['precision']:.4f}</div>
+                    <div style="background:{pill_bg}; padding:8px; border-radius:8px; border:{pill_border};">
+                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase; font-weight:700;">Precision</div>
+                        <div style="font-weight:800; color:{text_main}; font-size:15px; font-family:'JetBrains Mono';">{m_info['precision']:.4f}</div>
                     </div>
-                    <div style="background:{pill_bg}; padding:8px; border-radius:8px; border:1px solid {pill_border};">
-                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase;">Recall</div>
-                        <div style="font-weight:700; color:{text_main}; font-size:15px; font-family:'JetBrains Mono';">{m_info['recall']:.4f}</div>
+                    <div style="background:{pill_bg}; padding:8px; border-radius:8px; border:{pill_border};">
+                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase; font-weight:700;">Recall</div>
+                        <div style="font-weight:800; color:{text_main}; font-size:15px; font-family:'JetBrains Mono';">{m_info['recall']:.4f}</div>
                     </div>
                 </div>
             </div>
@@ -1202,7 +1370,7 @@ with tab_bench:
             name="Single-Split (25,257 Test)",
             x=model_names_short,
             y=single_accs,
-            marker_color="#6366F1",
+            marker_color="#4F46E5",
             text=[f"{val:.2f}%" for val in single_accs],
             textposition="outside",
             textfont=dict(color=text_main, family="JetBrains Mono", size=10)
@@ -1295,18 +1463,18 @@ with tab_bench:
             <div class="soc-kpi-label">Selected Classifier</div>
             <div style="font-size:16px; font-weight:800; color:{text_main}; margin-top:4px;">{cm_model_choice}</div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
-                <div style="background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); padding:8px; border-radius:8px;">
-                    <div style="font-size:10px; color:#059669; font-weight:700;">FALSE POSITIVES (FP)</div>
+                <div style="background:rgba(16,185,129,0.12); border:1.5px solid rgba(16,185,129,0.4); padding:8px; border-radius:8px;">
+                    <div style="font-size:10px; color:#059669; font-weight:800;">FALSE POSITIVES (FP)</div>
                     <div style="font-size:18px; font-weight:800; color:{text_main}; font-family:'JetBrains Mono';">{chosen_cm['fp']}</div>
-                    <div style="font-size:10.5px; color:#059669;">Rate: {fp_rate:.2f}%</div>
+                    <div style="font-size:10.5px; color:#059669; font-weight:700;">Rate: {fp_rate:.2f}%</div>
                 </div>
-                <div style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.3); padding:8px; border-radius:8px;">
-                    <div style="font-size:10px; color:#DC2626; font-weight:700;">FALSE NEGATIVES (FN)</div>
+                <div style="background:rgba(239,68,68,0.12); border:1.5px solid rgba(239,68,68,0.4); padding:8px; border-radius:8px;">
+                    <div style="font-size:10px; color:#DC2626; font-weight:800;">FALSE NEGATIVES (FN)</div>
                     <div style="font-size:18px; font-weight:800; color:{text_main}; font-family:'JetBrains Mono';">{chosen_cm['fn']}</div>
-                    <div style="font-size:10.5px; color:#DC2626;">Rate: {fn_rate:.2f}%</div>
+                    <div style="font-size:10.5px; color:#DC2626; font-weight:700;">Rate: {fn_rate:.2f}%</div>
                 </div>
             </div>
-            <div style="margin-top:12px; font-size:11.5px; color:{text_muted}; line-height:1.5;">
+            <div style="margin-top:12px; font-size:11.5px; color:{text_secondary}; line-height:1.5; font-weight:500;">
                 <b>Security Context:</b> In intrusion detection, False Negatives (missed attacks) are high-risk compromises, while False Positives cause operational alert fatigue.
                 Random Forest achieves an exceptional <b>13 False Positives</b> and <b>61 False Negatives</b> across 25,257 test flows.
             </div>
@@ -1324,7 +1492,7 @@ with tab_bench:
             x=["Normal (0)", "Attack (1)"],
             y=["Normal (0)", "Attack (1)"],
             text_auto=True,
-            color_continuous_scale=[[0, "#E0E7FF" if not is_dark else "#0F172A"], [1, "#6366F1"]],
+            color_continuous_scale=[[0, "#E0E7FF" if not is_dark else "#0F172A"], [1, "#4F46E5"]],
             aspect="auto"
         )
         fig_heat.update_layout(
@@ -1333,8 +1501,8 @@ with tab_bench:
             paper_bgcolor=plotly_paper,
             plot_bgcolor=plotly_paper,
             font=dict(color=plotly_font, family="Inter"),
-            xaxis=dict(color=text_secondary, tickfont=dict(size=12)),
-            yaxis=dict(color=text_secondary, tickfont=dict(size=12))
+            xaxis=dict(color=text_secondary, tickfont=dict(size=12, color=text_main)),
+            yaxis=dict(color=text_secondary, tickfont=dict(size=12, color=text_main))
         )
         fig_heat.update_traces(textfont=dict(size=14, family="JetBrains Mono", color="#FFFFFF" if is_dark else "#0F172A"))
         st.plotly_chart(fig_heat, use_container_width=True, config={'displayModeBar': False})
@@ -1391,13 +1559,13 @@ with tab_diag:
             x=cluster_0[:, 0], y=cluster_0[:, 1],
             mode="markers",
             name="Cluster 0 (99.3% Malicious Attacks)",
-            marker=dict(color="#EF4444", size=6, opacity=0.75, symbol="circle")
+            marker=dict(color="#EF4444", size=6, opacity=0.8, symbol="circle")
         ))
         fig_cluster.add_trace(go.Scatter(
             x=cluster_1[:, 0], y=cluster_1[:, 1],
             mode="markers",
             name="Cluster 1 (85.4% Benign Normal)",
-            marker=dict(color="#10B981", size=6, opacity=0.75, symbol="square")
+            marker=dict(color="#10B981", size=6, opacity=0.8, symbol="square")
         ))
         fig_cluster.update_layout(
             title="Unsupervised K-Means Clustering (k=2, Silhouette: 0.5512)",
@@ -1423,7 +1591,7 @@ with tab_diag:
             y=coeff_names,
             orientation="h",
             color=coeff_vals,
-            color_continuous_scale=[[0, "#0284C7"], [1, "#6366F1"]],
+            color_continuous_scale=[[0, "#0284C7"], [1, "#4F46E5"]],
             labels={"x": "Spark LinearRegression Coefficient Weight", "y": "Feature Name"}
         )
         fig_coeff.update_layout(
@@ -1486,23 +1654,23 @@ with tab_diag:
                 <div class="panel-indicator" style="background:#D97706;"></div>
                 <h4 class="panel-title">Adversarial Drift: Novel Unseen Attacks</h4>
             </div>
-            <div style="font-size:12.5px; color:{text_secondary}; line-height:1.6;">
+            <div style="font-size:12.5px; color:{text_secondary}; line-height:1.6; font-weight:500;">
                 In cybersecurity, models evaluated solely on known splits can exhibit false confidence.
                 When tested against <b>KDDTest+ (22,544 records)</b> containing zero-day attack variants never present in training data:
             </div>
             <div style="margin-top:14px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                <div style="background:{kpi_bg}; padding:10px; border-radius:10px; border:1px solid {card_border};">
-                    <div style="font-size:11px; color:{text_muted};">Random Forest</div>
+                <div style="background:{kpi_bg}; padding:10px; border-radius:10px; border:{card_border};">
+                    <div style="font-size:11px; color:{text_muted}; font-weight:700;">Random Forest</div>
                     <div style="font-size:20px; font-weight:800; color:{text_main}; font-family:'JetBrains Mono';">77.1%</div>
                     <div style="font-size:10px; color:{text_muted};">Novel attack generalization</div>
                 </div>
-                <div style="background:{kpi_bg}; padding:10px; border-radius:10px; border:1px solid {card_border};">
-                    <div style="font-size:11px; color:{text_muted};">Decision Tree</div>
+                <div style="background:{kpi_bg}; padding:10px; border-radius:10px; border:{card_border};">
+                    <div style="font-size:11px; color:{text_muted}; font-weight:700;">Decision Tree</div>
                     <div style="font-size:20px; font-weight:800; color:{text_main}; font-family:'JetBrains Mono';">79.8%</div>
                     <div style="font-size:10px; color:{text_muted};">Novel attack generalization</div>
                 </div>
             </div>
-            <div style="margin-top:14px; font-size:11.5px; color:{text_muted}; line-height:1.5;">
+            <div style="margin-top:14px; font-size:11.5px; color:{text_secondary}; line-height:1.5; font-weight:500;">
                 <b>Engineering Conclusion:</b> The ~20% performance delta highlights genuine adversarial evolution.
                 Production intrusion detection systems must integrate automated retraining pipelines (e.g. streaming Spark ML pipelines with Apache Kafka) to counter novel payload signatures.
             </div>
@@ -1526,23 +1694,23 @@ with tab_arch:
     with arch_c1:
         st.markdown(f"""
         <div class="glass-panel">
-            <h4 style="margin:0 0 12px 0; font-size:14px; color:{text_main};">Distributed Pipeline Execution Flow</h4>
+            <h4 style="margin:0 0 12px 0; font-size:14px; color:{text_main}; font-weight:800;">Distributed Pipeline Execution Flow</h4>
             <div style="display:flex; flex-direction:column; gap:10px; font-size:12.5px;">
-                <div style="background:{kpi_bg}; border:1px solid {card_border}; border-radius:10px; padding:10px 14px;">
-                    <span style="color:#6366F1; font-weight:700;">STAGE 1-3:</span> <b>Distributed Ingestion & Schema Binding</b><br/>
-                    <span style="color:{text_muted}; font-size:11.5px;">Raw text ingestion via <code>sc.textFile()</code> RDD partitions &gt; Schema enforcement with 43 defined column datatypes &gt; Distributed DataFrame loading via <code>spark.read.csv()</code>.</span>
+                <div style="background:{kpi_bg}; border:{card_border}; border-radius:10px; padding:10px 14px;">
+                    <span style="color:#4F46E5; font-weight:800;">STAGE 1-3:</span> <b>Distributed Ingestion & Schema Binding</b><br/>
+                    <span style="color:{text_secondary}; font-size:11.5px; font-weight:500;">Raw text ingestion via <code>sc.textFile()</code> RDD partitions &gt; Schema enforcement with 43 defined column datatypes &gt; Distributed DataFrame loading via <code>spark.read.csv()</code>.</span>
                 </div>
-                <div style="background:{kpi_bg}; border:1px solid {card_border}; border-radius:10px; padding:10px 14px;">
-                    <span style="color:#0284C7; font-weight:700;">STAGE 4-6:</span> <b>Spark SQL Analytics & Binary Target Derivation</b><br/>
-                    <span style="color:{text_muted}; font-size:11.5px;">Zero null verification across all columns &gt; Aggregation queries on temp view <code>network_traffic</code> &gt; Conversion of 23 attack categories into binary target (<code>0.0=Normal, 1.0=Attack</code>).</span>
+                <div style="background:{kpi_bg}; border:{card_border}; border-radius:10px; padding:10px 14px;">
+                    <span style="color:#0284C7; font-weight:800;">STAGE 4-6:</span> <b>Spark SQL Analytics & Binary Target Derivation</b><br/>
+                    <span style="color:{text_secondary}; font-size:11.5px; font-weight:500;">Zero null verification across all columns &gt; Aggregation queries on temp view <code>network_traffic</code> &gt; Conversion of 23 attack categories into binary target (<code>0.0=Normal, 1.0=Attack</code>).</span>
                 </div>
-                <div style="background:{kpi_bg}; border:1px solid {card_border}; border-radius:10px; padding:10px 14px;">
-                    <span style="color:#059669; font-weight:700;">STAGE 7-8:</span> <b>Feature Engineering Pipeline (121-Dimensional Vector)</b><br/>
-                    <span style="color:{text_muted}; font-size:11.5px;"><code>StringIndexer</code> + <code>OneHotEncoder</code> on categorical features (protocol, service, flag) &gt; <code>VectorAssembler</code> combining 38 numeric + 3 OHE vectors = 121 dimensions &gt; <code>MinMaxScaler</code> fit strictly on training set.</span>
+                <div style="background:{kpi_bg}; border:{card_border}; border-radius:10px; padding:10px 14px;">
+                    <span style="color:#059669; font-weight:800;">STAGE 7-8:</span> <b>Feature Engineering Pipeline (121-Dimensional Vector)</b><br/>
+                    <span style="color:{text_secondary}; font-size:11.5px; font-weight:500;"><code>StringIndexer</code> + <code>OneHotEncoder</code> on categorical features (protocol, service, flag) &gt; <code>VectorAssembler</code> combining 38 numeric + 3 OHE vectors = 121 dimensions &gt; <code>MinMaxScaler</code> fit strictly on training set.</span>
                 </div>
-                <div style="background:{kpi_bg}; border:1px solid {card_border}; border-radius:10px; padding:10px 14px;">
-                    <span style="color:#D97706; font-weight:700;">STAGE 9-15:</span> <b>Distributed Model Training, 5-Fold CV & Diagnostics</b><br/>
-                    <span style="color:{text_muted}; font-size:11.5px;">Parallel training across 5 MLlib classifiers &gt; 5-fold <code>CrossValidator</code> robustness evaluation &gt; K-Means unsupervised clustering &gt; Multivariate linear regression &gt; Held-out KDDTest+ validation.</span>
+                <div style="background:{kpi_bg}; border:{card_border}; border-radius:10px; padding:10px 14px;">
+                    <span style="color:#D97706; font-weight:800;">STAGE 9-15:</span> <b>Distributed Model Training, 5-Fold CV & Diagnostics</b><br/>
+                    <span style="color:{text_secondary}; font-size:11.5px; font-weight:500;">Parallel training across 5 MLlib classifiers &gt; 5-fold <code>CrossValidator</code> robustness evaluation &gt; K-Means unsupervised clustering &gt; Multivariate linear regression &gt; Held-out KDDTest+ validation.</span>
                 </div>
             </div>
         </div>
@@ -1551,34 +1719,34 @@ with tab_arch:
     with arch_c2:
         st.markdown(f"""
         <div class="glass-panel">
-            <h4 style="margin:0 0 12px 0; font-size:14px; color:{text_main};">Enterprise Technology Stack</h4>
+            <h4 style="margin:0 0 12px 0; font-size:14px; color:{text_main}; font-weight:800;">Enterprise Technology Stack</h4>
             <div style="display:flex; flex-direction:column; gap:8px; font-size:12px;">
-                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid {card_border};">
-                    <span style="color:{text_muted};">Cluster Engine</span>
-                    <span style="color:{text_main}; font-weight:600; font-family:'JetBrains Mono';">Apache Spark 3.5.9</span>
+                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:{card_border};">
+                    <span style="color:{text_muted}; font-weight:600;">Cluster Engine</span>
+                    <span style="color:{text_main}; font-weight:700; font-family:'JetBrains Mono';">Apache Spark 3.5.9</span>
                 </div>
-                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid {card_border};">
-                    <span style="color:{text_muted};">JVM Runtime</span>
-                    <span style="color:{text_main}; font-weight:600; font-family:'JetBrains Mono';">Adoptium OpenJDK 1.8.0_504</span>
+                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:{card_border};">
+                    <span style="color:{text_muted}; font-weight:600;">JVM Runtime</span>
+                    <span style="color:{text_main}; font-weight:700; font-family:'JetBrains Mono';">Adoptium OpenJDK 1.8.0_504</span>
                 </div>
-                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid {card_border};">
-                    <span style="color:{text_muted};">ML Framework</span>
-                    <span style="color:{text_main}; font-weight:600; font-family:'JetBrains Mono';">Spark MLlib (pyspark.ml)</span>
+                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:{card_border};">
+                    <span style="color:{text_muted}; font-weight:600;">ML Framework</span>
+                    <span style="color:{text_main}; font-weight:700; font-family:'JetBrains Mono';">Spark MLlib (pyspark.ml)</span>
                 </div>
-                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid {card_border};">
-                    <span style="color:{text_muted};">Master Mode</span>
-                    <span style="color:{text_main}; font-weight:600; font-family:'JetBrains Mono';">local[*] Multi-Core</span>
+                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:{card_border};">
+                    <span style="color:{text_muted}; font-weight:600;">Master Mode</span>
+                    <span style="color:{text_main}; font-weight:700; font-family:'JetBrains Mono';">local[*] Multi-Core</span>
                 </div>
-                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid {card_border};">
-                    <span style="color:{text_muted};">Presentation UI</span>
-                    <span style="color:{text_main}; font-weight:600; font-family:'JetBrains Mono';">Streamlit + Plotly</span>
+                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:{card_border};">
+                    <span style="color:{text_muted}; font-weight:600;">Presentation UI</span>
+                    <span style="color:{text_main}; font-weight:700; font-family:'JetBrains Mono';">Streamlit + Plotly</span>
                 </div>
                 <div style="display:flex; justify-content:space-between; padding:6px 0;">
-                    <span style="color:{text_muted};">Benchmark Dataset</span>
-                    <span style="color:{text_main}; font-weight:600; font-family:'JetBrains Mono';">UNB NSL-KDD (148.5k records)</span>
+                    <span style="color:{text_muted}; font-weight:600;">Benchmark Dataset</span>
+                    <span style="color:{text_main}; font-weight:700; font-family:'JetBrains Mono';">UNB NSL-KDD (148.5k records)</span>
                 </div>
             </div>
-            <div style="margin-top:16px; background:rgba(99,102,241,0.12); border:1px solid rgba(99,102,241,0.3); border-radius:10px; padding:10px; font-size:11.5px; color:{text_main};">
+            <div style="margin-top:16px; background:rgba(79,70,229,0.12); border:1.5px solid rgba(79,70,229,0.3); border-radius:10px; padding:10px; font-size:11.5px; color:{text_main}; font-weight:500;">
                 <b>Production Scalability:</b> In high-throughput enterprise deployments, this Spark MLlib pipeline can scale horizontally across multi-node clusters using Apache Kafka and Spark Structured Streaming for real-time edge packet filtering.
             </div>
         </div>
@@ -1588,7 +1756,7 @@ with tab_arch:
 # 9. PRODUCTION ENTERPRISE FOOTER
 # ------------------------------------------------------------------------------
 st.markdown(f"""
-<div style="text-align:center; padding:24px 0 10px 0; border-top:1px solid {card_border}; margin-top:30px; font-size:11.5px; color:{text_muted};">
+<div style="text-align:center; padding:24px 0 10px 0; border-top:{card_border}; margin-top:30px; font-size:11.5px; color:{text_muted}; font-weight:600;">
     <b>AegisNet Shield</b> — Enterprise Distributed Network Intrusion Detection & Threat Intelligence Platform<br/>
     Powered by Apache Spark 3.5.9 MLlib • Verified against 148,517 NSL-KDD Network Flows
 </div>
