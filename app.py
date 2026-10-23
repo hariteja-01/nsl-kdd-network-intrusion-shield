@@ -234,50 +234,55 @@ def apply_scenario_preset(preset_key):
 init_app_state()
 
 # ------------------------------------------------------------------------------
-# 5. DYNAMIC DUAL-THEME ENGINE (21ST.DEV HIGH CONTRAST & POLISH)
+# 5. DUAL-THEME COLOR DEFINITIONS & HIGH-CONTRAST ENGINE
 # ------------------------------------------------------------------------------
 is_dark = (st.session_state.theme_mode == "Dark Cyber")
 
 if is_dark:
     bg_app = "#06090E"
     bg_gradient = """
-        radial-gradient(1200px 600px at 50% -50px, rgba(99, 102, 241, 0.18), transparent 70%),
-        radial-gradient(900px 500px at 90% 20%, rgba(14, 165, 233, 0.10), transparent 60%),
+        radial-gradient(1200px 600px at 50% -50px, rgba(99, 102, 241, 0.20), transparent 70%),
+        radial-gradient(900px 500px at 90% 20%, rgba(14, 165, 233, 0.12), transparent 60%),
         linear-gradient(180deg, #06090E 0%, #090E17 50%, #0B111D 100%)
     """
-    card_bg = "rgba(13, 19, 33, 0.88)"
-    card_border = "1px solid rgba(255, 255, 255, 0.1)"
-    kpi_bg = "rgba(15, 23, 42, 0.75)"
+    card_bg = "rgba(13, 19, 33, 0.90)"
+    card_border = "1.5px solid rgba(255, 255, 255, 0.14)"
+    kpi_bg = "rgba(18, 26, 46, 0.85)"
     text_main = "#FFFFFF"
     text_secondary = "#E2E8F0"
     text_muted = "#94A3B8"
-    input_bg = "rgba(15, 23, 42, 0.85)"
-    input_border = "1.5px solid rgba(255, 255, 255, 0.14)"
+    input_bg = "rgba(18, 26, 46, 0.95)"
+    input_border = "1.5px solid rgba(255, 255, 255, 0.20)"
 
-    tab_list_bg = "rgba(13, 19, 33, 0.95)"
-    tab_unselected_bg = "rgba(15, 23, 42, 0.6)"
-    tab_unselected_border = "1px solid rgba(255, 255, 255, 0.08)"
-    tab_unselected_text = "#CBD5E1"
-    tab_hover_bg = "rgba(255, 255, 255, 0.08)"
-    tab_active_bg = "linear-gradient(135deg, rgba(99, 102, 241, 0.45) 0%, rgba(14, 165, 233, 0.45) 100%)"
-    tab_active_border = "rgba(99, 102, 241, 0.75)"
+    # Tabs
+    tab_list_bg = "rgba(11, 16, 28, 0.95)"
+    tab_unselected_bg = "rgba(22, 32, 54, 0.90)"
+    tab_unselected_border = "1.5px solid rgba(255, 255, 255, 0.16)"
+    tab_unselected_text = "#FFFFFF"
+    tab_hover_bg = "rgba(99, 102, 241, 0.25)"
+    tab_active_bg = "linear-gradient(135deg, #4F46E5 0%, #0284C7 100%)"
+    tab_active_border = "#4F46E5"
 
-    btn_sec_bg = "rgba(15, 23, 42, 0.75)"
-    btn_sec_border = "1.5px solid rgba(255, 255, 255, 0.14)"
-    btn_sec_text = "#F8FAFC"
-    btn_sec_hover_bg = "rgba(99, 102, 241, 0.22)"
+    # Buttons
+    btn_sec_bg = "rgba(22, 32, 54, 0.95)"
+    btn_sec_border = "1.5px solid rgba(255, 255, 255, 0.22)"
+    btn_sec_text = "#FFFFFF"
+    btn_sec_hover_bg = "rgba(99, 102, 241, 0.3)"
 
-    pill_bg = "rgba(15, 23, 42, 0.6)"
-    pill_border = "1px solid rgba(255, 255, 255, 0.08)"
+    pill_bg = "rgba(18, 26, 46, 0.85)"
+    pill_border = "1px solid rgba(255, 255, 255, 0.12)"
 
-    active_preset_bg = "rgba(15, 23, 42, 0.7)"
-    active_preset_border = "1.5px solid rgba(99, 102, 241, 0.4)"
-    active_preset_text = "#E2E8F0"
+    active_preset_bg = "rgba(22, 32, 54, 0.95)"
+    active_preset_border = "1.5px solid rgba(99, 102, 241, 0.55)"
+    active_preset_text = "#F8FAFC"
     active_preset_kicker = "#818CF8"
 
+    # Charts
     plotly_paper = "rgba(0,0,0,0)"
-    plotly_font = "#CBD5E1"
-    plotly_grid = "rgba(255, 255, 255, 0.08)"
+    plotly_font = "#FFFFFF"
+    plotly_axis = "#E2E8F0"
+    plotly_grid = "rgba(255, 255, 255, 0.10)"
+    hm_colorscale = [[0, "#0F172A"], [0.35, "#1E1B4B"], [0.7, "#4338CA"], [1.0, "#0284C7"]]
 else:
     bg_app = "#F8FAFC"
     bg_gradient = """
@@ -294,14 +299,16 @@ else:
     input_bg = "#FFFFFF"
     input_border = "1.5px solid #94A3B8"
 
+    # Tabs
     tab_list_bg = "#E2E8F0"
     tab_unselected_bg = "#FFFFFF"
     tab_unselected_border = "1.5px solid #CBD5E1"
     tab_unselected_text = "#0F172A"
-    tab_hover_bg = "#F1F5F9"
+    tab_hover_bg = "#EFF6FF"
     tab_active_bg = "linear-gradient(135deg, #4338CA 0%, #0284C7 100%)"
     tab_active_border = "#4338CA"
 
+    # Buttons
     btn_sec_bg = "#FFFFFF"
     btn_sec_border = "1.5px solid #94A3B8"
     btn_sec_text = "#0F172A"
@@ -315,18 +322,33 @@ else:
     active_preset_text = "#1E3A8A"
     active_preset_kicker = "#2563EB"
 
+    # Charts
     plotly_paper = "#FFFFFF"
     plotly_font = "#0F172A"
-    plotly_grid = "rgba(15, 23, 42, 0.1)"
+    plotly_axis = "#1E293B"
+    plotly_grid = "rgba(15, 23, 42, 0.10)"
+    hm_colorscale = [[0, "#EEF2FF"], [0.35, "#C7D2FE"], [0.7, "#6366F1"], [1.0, "#312E81"]]
 
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap');
 
-/* Master Reset */
-html, body, [class*="css"], .stMarkdown, .stText, p, span, label, div {{
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+/* Global CSS Variables & Specificity Overrides */
+:root {{
+    --text-color: {text_main} !important;
+    --background-color: {bg_app} !important;
+    --secondary-background-color: {card_bg} !important;
+    --primary-color: #4F46E5 !important;
+    color-scheme: {"dark" if is_dark else "light"} !important;
 }}
+
+html, body, [class*="css"], .stApp {{
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    color: {text_main} !important;
+    background-color: {bg_app} !important;
+    background-image: {bg_gradient} !important;
+}}
+
 code, kbd, samp, pre, .mono-font {{
     font-family: 'JetBrains Mono', monospace !important;
 }}
@@ -340,12 +362,6 @@ code, kbd, samp, pre, .mono-font {{
 }}
 
 #MainMenu, footer, header {{ visibility: hidden !important; height: 0 !important; }}
-
-.stApp {{
-    background-color: {bg_app} !important;
-    background-image: {bg_gradient} !important;
-    color: {text_main} !important;
-}}
 
 /* Top Hero Section */
 .soc-hero {{
@@ -378,7 +394,7 @@ code, kbd, samp, pre, .mono-font {{
     gap: 8px;
     background: {kpi_bg};
     border: {card_border};
-    color: {text_main};
+    color: {text_main} !important;
     padding: 5px 14px;
     border-radius: 9999px;
     font-size: 11px;
@@ -404,7 +420,7 @@ code, kbd, samp, pre, .mono-font {{
     align-items: center;
     gap: 14px;
     font-size: 11.5px;
-    color: {text_muted};
+    color: {text_muted} !important;
     font-family: 'JetBrains Mono', monospace;
     font-weight: 600;
 }}
@@ -424,7 +440,7 @@ code, kbd, samp, pre, .mono-font {{
 }}
 .soc-hero p.sub {{
     margin: 0;
-    color: {text_secondary};
+    color: {text_secondary} !important;
     font-size: 13.5px;
     line-height: 1.6;
     max-width: 950px;
@@ -445,7 +461,7 @@ code, kbd, samp, pre, .mono-font {{
     border-radius: 14px;
     padding: 13px 15px;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,{0.2 if is_dark else 0.04});
+    box-shadow: 0 4px 12px rgba(0,0,0,{0.25 if is_dark else 0.04});
 }}
 .soc-kpi-card:hover {{
     border-color: #4F46E5;
@@ -456,7 +472,7 @@ code, kbd, samp, pre, .mono-font {{
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: {text_muted};
+    color: {text_muted} !important;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -465,13 +481,13 @@ code, kbd, samp, pre, .mono-font {{
     font-size: 23px;
     font-weight: 800;
     letter-spacing: -0.02em;
-    color: {text_main};
+    color: {text_main} !important;
     margin-top: 4px;
     font-family: 'JetBrains Mono', monospace;
 }}
 .soc-kpi-sub {{
     font-size: 11.5px;
-    color: {text_secondary};
+    color: {text_secondary} !important;
     margin-top: 2px;
     font-weight: 500;
 }}
@@ -500,62 +516,58 @@ code, kbd, samp, pre, .mono-font {{
 .panel-title {{
     font-size: 14px;
     font-weight: 800;
-    color: {text_main};
+    color: {text_main} !important;
     margin: 0;
 }}
 .panel-subtitle {{
     font-size: 11.5px;
-    color: {text_muted};
+    color: {text_muted} !important;
     margin: 0 0 0 auto;
     font-weight: 500;
 }}
 
 /* ========================================================= */
-/* TABS STYLING - HIGH CONTRAST IN BOTH LIGHT & DARK MODES   */
+/* TABS STYLING - 100% CONTRAST IN BOTH DARK & LIGHT MODES   */
 /* ========================================================= */
 .stTabs [data-baseweb="tab-list"] {{
     gap: 8px !important;
     background: {tab_list_bg} !important;
     padding: 6px !important;
-    border-radius: 14px !important;
+    border-radius: 16px !important;
     border: {card_border} !important;
     width: 100% !important;
     margin-bottom: 16px !important;
 }}
 .stTabs [data-baseweb="tab"] {{
     flex: 1 !important;
-    border-radius: 10px !important;
+    border-radius: 12px !important;
     padding: 10px 16px !important;
     background: {tab_unselected_bg} !important;
     border: {tab_unselected_border} !important;
-    transition: all 0.2s ease !important;
+    transition: all 0.25s ease !important;
     text-align: center !important;
 }}
-.stTabs [data-baseweb="tab"] p,
-.stTabs [data-baseweb="tab"] span,
-.stTabs [data-baseweb="tab"] div {{
-    font-weight: 700 !important;
+.stTabs [data-baseweb="tab"] * {{
+    font-weight: 800 !important;
     font-size: 13px !important;
     color: {tab_unselected_text} !important;
     opacity: 1 !important;
 }}
 .stTabs [data-baseweb="tab"]:hover {{
     background: {tab_hover_bg} !important;
+    border-color: #4F46E5 !important;
 }}
-.stTabs [data-baseweb="tab"]:hover p,
-.stTabs [data-baseweb="tab"]:hover span {{
-    color: {text_main} !important;
+.stTabs [data-baseweb="tab"]:hover * {{
+    color: {"#FFFFFF" if is_dark else "#4F46E5"} !important;
 }}
 .stTabs [aria-selected="true"] {{
     background: {tab_active_bg} !important;
     border: 1.5px solid {tab_active_border} !important;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3) !important;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4) !important;
 }}
-.stTabs [aria-selected="true"] p,
-.stTabs [aria-selected="true"] span,
-.stTabs [aria-selected="true"] div {{
+.stTabs [aria-selected="true"] * {{
     color: #FFFFFF !important;
-    font-weight: 800 !important;
+    font-weight: 900 !important;
 }}
 .stTabs [data-baseweb="tab-highlight"],
 .stTabs [data-baseweb="tab-border"] {{
@@ -566,11 +578,11 @@ code, kbd, samp, pre, .mono-font {{
 }}
 
 /* ========================================================= */
-/* BUTTONS - HIGH CONTRAST SECONDARY & PRIMARY STYLING       */
+/* BUTTONS - HIGH CONTRAST IN BOTH DARK & LIGHT MODES        */
 /* ========================================================= */
 .stButton > button {{
     border-radius: 11px !important;
-    font-weight: 700 !important;
+    font-weight: 800 !important;
     font-size: 13px !important;
     letter-spacing: 0.01em !important;
     transition: all 0.2s ease !important;
@@ -579,45 +591,42 @@ code, kbd, samp, pre, .mono-font {{
 .stButton > button[kind="secondary"] {{
     background: {btn_sec_bg} !important;
     border: {btn_sec_border} !important;
-    box-shadow: 0 2px 6px rgba(0,0,0,{0.2 if is_dark else 0.05}) !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,{0.3 if is_dark else 0.05}) !important;
 }}
-.stButton > button[kind="secondary"] p,
-.stButton > button[kind="secondary"] span {{
+.stButton > button[kind="secondary"] * {{
     color: {btn_sec_text} !important;
-    font-weight: 700 !important;
+    font-weight: 800 !important;
 }}
 .stButton > button[kind="secondary"]:hover {{
     background: {btn_sec_hover_bg} !important;
     border-color: #4F46E5 !important;
     transform: translateY(-1px) !important;
 }}
-.stButton > button[kind="secondary"]:hover p,
-.stButton > button[kind="secondary"]:hover span {{
+.stButton > button[kind="secondary"]:hover * {{
     color: {"#FFFFFF" if is_dark else "#4F46E5"} !important;
 }}
 .stButton > button[kind="primary"] {{
     background: linear-gradient(135deg, #4F46E5 0%, #0284C7 100%) !important;
     border: 1.5px solid #4F46E5 !important;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4) !important;
 }}
-.stButton > button[kind="primary"] p,
-.stButton > button[kind="primary"] span {{
+.stButton > button[kind="primary"] * {{
     color: #FFFFFF !important;
-    font-weight: 800 !important;
+    font-weight: 900 !important;
 }}
 .stButton > button[kind="primary"]:hover {{
     background: linear-gradient(135deg, #4338CA 0%, #0369A1 100%) !important;
-    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45) !important;
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.5) !important;
     transform: translateY(-1px) !important;
 }}
 
-/* 21st.dev Inspired Minimalist Icon Theme Capsule */
+/* 21st.dev Minimalist Theme Toggle */
 div[data-testid="stSegmentedControl"] {{
     background: {kpi_bg} !important;
     border: {card_border} !important;
     border-radius: 9999px !important;
     padding: 3px 5px !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, {0.25 if is_dark else 0.06}) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, {0.3 if is_dark else 0.06}) !important;
     display: inline-flex !important;
     margin-left: auto !important;
 }}
@@ -639,17 +648,14 @@ div[data-testid="stSegmentedControl"] button:hover {{
 }}
 div[data-testid="stSegmentedControl"] button[aria-checked="true"] {{
     background: {"linear-gradient(135deg, #1E293B, #0F172A)" if is_dark else "linear-gradient(135deg, #EFF6FF, #DBEAFE)"} !important;
-    border: 1px solid {"rgba(99, 102, 241, 0.5)" if is_dark else "#93C5FD"} !important;
+    border: 1px solid {"rgba(99, 102, 241, 0.6)" if is_dark else "#93C5FD"} !important;
     box-shadow: {"0 0 12px rgba(99, 102, 241, 0.4)" if is_dark else "0 0 10px rgba(245, 158, 11, 0.35)"} !important;
-}}
-div[data-testid="stSegmentedControl"] button[aria-checked="true"] p {{
-    transform: scale(1.05) !important;
 }}
 
 /* Input Labels & Controls */
 [data-testid="stWidgetLabel"] p, label p {{
     font-size: 12.5px !important;
-    font-weight: 700 !important;
+    font-weight: 800 !important;
     color: {text_main} !important;
     letter-spacing: 0.01em !important;
     margin-bottom: 4px !important;
@@ -664,7 +670,7 @@ div[data-baseweb="select"] span,
 div[data-baseweb="select"] div {{
     color: {text_main} !important;
     font-size: 13px !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
 }}
 div[data-baseweb="select"] svg {{
     fill: {text_main} !important;
@@ -679,10 +685,10 @@ div[data-baseweb="popover"] li {{
     border-radius: 8px !important;
     color: {text_main} !important;
     font-size: 12.5px !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
 }}
 div[data-baseweb="popover"] li:hover {{
-    background-color: {"rgba(99, 102, 241, 0.18)" if is_dark else "#EFF6FF"} !important;
+    background-color: {"rgba(99, 102, 241, 0.22)" if is_dark else "#EFF6FF"} !important;
     color: {"#FFFFFF" if is_dark else "#4F46E5"} !important;
 }}
 
@@ -696,12 +702,12 @@ div[data-baseweb="popover"] li:hover {{
 }}
 [data-testid="stSlider"] div[data-testid="stTickBar"] {{
     color: {text_muted} !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
 }}
 [data-testid="stSlider"] div[data-testid="stTickBarMin"],
 [data-testid="stSlider"] div[data-testid="stTickBarMax"] {{
     color: {text_muted} !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
 }}
 
 /* Parameter Information Capsule */
@@ -711,38 +717,38 @@ div[data-baseweb="popover"] li:hover {{
     border-radius: 8px;
     padding: 7px 10px;
     font-size: 11px;
-    color: {text_muted};
+    color: {text_muted} !important;
     margin-top: 4px;
     line-height: 1.4;
-    font-weight: 500;
+    font-weight: 600;
 }}
 .param-pill b {{
-    color: {text_secondary};
-    font-weight: 700;
+    color: {text_secondary} !important;
+    font-weight: 800;
 }}
 
 /* Threat Decision Banners */
 .threat-banner-safe {{
-    background: {"linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, rgba(6, 78, 59, 0.28) 100%)" if is_dark else "#F0FDF4"};
+    background: {"linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(6, 78, 59, 0.32) 100%)" if is_dark else "#F0FDF4"};
     border: 2px solid #10B981;
     border-radius: 16px;
     padding: 20px;
     position: relative;
-    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.2);
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.25);
     animation: fadeIn 0.4s ease-out;
 }}
 .threat-banner-attack {{
-    background: {"linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(127, 29, 29, 0.32) 100%)" if is_dark else "#FEF2F2"};
+    background: {"linear-gradient(135deg, rgba(239, 68, 68, 0.20) 0%, rgba(127, 29, 29, 0.36) 100%)" if is_dark else "#FEF2F2"};
     border: 2px solid #EF4444;
     border-radius: 16px;
     padding: 20px;
     position: relative;
-    box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.25);
+    box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.3);
     animation: threatPulse 1.8s infinite alternate, fadeIn 0.4s ease-out;
 }}
 @keyframes threatPulse {{
-    0% {{ box-shadow: 0 0 15px rgba(239, 68, 68, 0.2); }}
-    100% {{ box-shadow: 0 0 30px rgba(239, 68, 68, 0.5); }}
+    0% {{ box-shadow: 0 0 15px rgba(239, 68, 68, 0.25); }}
+    100% {{ box-shadow: 0 0 32px rgba(239, 68, 68, 0.6); }}
 }}
 @keyframes fadeIn {{
     from {{ opacity: 0; transform: translateY(6px); }}
@@ -751,13 +757,13 @@ div[data-baseweb="popover"] li:hover {{
 
 .decision-kicker {{
     font-size: 10.5px;
-    font-weight: 800;
+    font-weight: 900;
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }}
 .decision-title {{
     font-size: 22px;
-    font-weight: 800;
+    font-weight: 900;
     margin-top: 4px;
     letter-spacing: -0.02em;
     display: flex;
@@ -766,17 +772,17 @@ div[data-baseweb="popover"] li:hover {{
 }}
 .decision-body {{
     font-size: 12.5px;
-    color: {text_secondary};
+    color: {text_secondary} !important;
     margin-top: 6px;
     line-height: 1.6;
-    font-weight: 500;
+    font-weight: 600;
 }}
 
 /* Confidence Track */
 .conf-track {{
-    height: 9px;
+    height: 10px;
     border-radius: 999px;
-    background: {"rgba(255, 255, 255, 0.12)" if is_dark else "#E2E8F0"};
+    background: {"rgba(255, 255, 255, 0.14)" if is_dark else "#E2E8F0"};
     overflow: hidden;
     margin-top: 8px;
 }}
@@ -798,7 +804,7 @@ div[data-baseweb="popover"] li:hover {{
     border-radius: 16px;
     padding: 32px 24px;
     text-align: center;
-    color: {text_muted};
+    color: {text_muted} !important;
 }}
 .standby-icon {{
     font-size: 38px;
@@ -822,7 +828,7 @@ div[data-baseweb="popover"] li:hover {{
     border-radius: 14px;
     padding: 16px 20px;
     margin: 16px 0;
-    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2);
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.25);
 }}
 .anim-spinner {{
     width: 24px;
@@ -848,24 +854,23 @@ div[data-baseweb="popover"] li:hover {{
     border-radius: 12px !important;
 }}
 [data-testid="stExpander"] summary {{
-    font-weight: 700 !important;
+    font-weight: 800 !important;
     font-size: 13px !important;
     color: {text_main} !important;
 }}
-[data-testid="stExpander"] summary span,
-[data-testid="stExpander"] summary p {{
+[data-testid="stExpander"] summary * {{
     color: {text_main} !important;
-    font-weight: 700 !important;
+    font-weight: 800 !important;
 }}
-[data-testid="stExpander"] div[data-testid="stExpanderDetails"] p,
-[data-testid="stExpander"] div[data-testid="stExpanderDetails"] li {{
+[data-testid="stExpander"] div[data-testid="stExpanderDetails"] * {{
     color: {text_secondary} !important;
+    font-weight: 500 !important;
 }}
 </style>
 """, unsafe_allow_html=True)
 
 # ------------------------------------------------------------------------------
-# 6. HEADER HERO SECTION WITH THEME SWITCHER
+# 6. HEADER HERO SECTION WITH MINIMALIST ICON THEME SWITCHER
 # ------------------------------------------------------------------------------
 hero_col1, hero_col2 = st.columns([1.84, 0.16])
 with hero_col2:
@@ -909,7 +914,7 @@ st.markdown(f"""
         </div>
         <div class="soc-kpi-card">
             <div class="soc-kpi-label">Peak Detection Accuracy <span>RF</span></div>
-            <div class="soc-kpi-value" style="color:#4F46E5;">99.71%</div>
+            <div class="soc-kpi-value" style="color:#6366F1;">99.71%</div>
             <div class="soc-kpi-sub">Random Forest (F1: 0.9971)</div>
         </div>
         <div class="soc-kpi-card">
@@ -1189,7 +1194,7 @@ with tab_sim:
             <div style="font-size:16px; font-weight:800; color:{text_main};">
                 STANDBY - Awaiting Distributed Packet Inspection
             </div>
-            <div style="font-size:12.5px; color:{text_secondary}; margin-top:6px; max-width:620px; margin-left:auto; margin-right:auto; line-height:1.6; font-weight:500;">
+            <div style="font-size:12.5px; color:{text_secondary}; margin-top:6px; max-width:620px; margin-left:auto; margin-right:auto; line-height:1.6; font-weight:600;">
                 The parameters above are staged for evaluation. Click <b>⚡ EXECUTE DISTRIBUTED INFERENCE</b> above
                 to run this 121-dimensional network vector through the <b>{sel_model.split(' (')[0]}</b> Spark MLlib pipeline.
             </div>
@@ -1224,13 +1229,13 @@ with tab_sim:
                         <div style="font-size:11px; font-weight:800; color:{text_muted}; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">
                             Automated Incident Response Recommendations
                         </div>
-                        <div style="font-size:12px; color:{text_secondary}; margin-bottom:4px; font-weight:600;">
+                        <div style="font-size:12px; color:{text_secondary}; margin-bottom:4px; font-weight:700;">
                             🛡️ <b>Automated Firewall Rule:</b> Inject eBPF drop rule for source CIDR on service <code>{res['service']}</code>.
                         </div>
-                        <div style="font-size:12px; color:{text_secondary}; margin-bottom:4px; font-weight:600;">
+                        <div style="font-size:12px; color:{text_secondary}; margin-bottom:4px; font-weight:700;">
                             🔒 <b>TCP Rate Limiter:</b> Restrict maximum SYN packets per IP to 25 req/sec.
                         </div>
-                        <div style="font-size:12px; color:{text_secondary}; font-weight:600;">
+                        <div style="font-size:12px; color:{text_secondary}; font-weight:700;">
                             📋 <b>SIEM Dispatch:</b> High-priority incident logged to SOC triage queue.
                         </div>
                     </div>
@@ -1260,10 +1265,10 @@ with tab_sim:
                         <div style="font-size:11px; font-weight:800; color:{text_muted}; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">
                             Traffic Compliance Status
                         </div>
-                        <div style="font-size:12px; color:{text_secondary}; margin-bottom:4px; font-weight:600;">
+                        <div style="font-size:12px; color:{text_secondary}; margin-bottom:4px; font-weight:700;">
                             🟢 <b>Policy Check:</b> Conforms to permitted network security group (NSG) profiles.
                         </div>
-                        <div style="font-size:12px; color:{text_secondary}; font-weight:600;">
+                        <div style="font-size:12px; color:{text_secondary}; font-weight:700;">
                             ⚡ <b>Fast-Path Forwarding:</b> Packet admitted to edge routing gateway.
                         </div>
                     </div>
@@ -1288,17 +1293,17 @@ with tab_sim:
             fig_g = go.Figure(go.Indicator(
                 mode="gauge+number",
                 value=m_info["acc"] * 100,
-                number={"suffix": "%", "font": {"size": 28, "color": text_main, "family": "JetBrains Mono"}},
-                title={"text": f"<b>{res['model'].split(' (')[0]}</b><br><span style='font-size:11px; color:{text_muted};'>Held-Out Test Accuracy</span>", "font": {"size": 13, "color": text_secondary}},
+                number={"suffix": "%", "font": {"size": 28, "color": plotly_font, "family": "JetBrains Mono"}},
+                title={"text": f"<b>{res['model'].split(' (')[0]}</b><br><span style='font-size:11px; color:{text_muted};'>Held-Out Test Accuracy</span>", "font": {"size": 13, "color": plotly_axis}},
                 gauge={
-                    "axis": {"range": [90, 100], "tickcolor": text_muted, "tickwidth": 1},
-                    "bar": {"color": m_info["color"], "thickness": 0.3},
+                    "axis": {"range": [90, 100], "tickcolor": plotly_axis, "tickwidth": 1.5, "tickfont": {"color": plotly_axis, "family": "JetBrains Mono"}},
+                    "bar": {"color": m_info["color"], "thickness": 0.35},
                     "bgcolor": kpi_bg,
-                    "borderwidth": 1,
-                    "bordercolor": "#CBD5E1" if not is_dark else "rgba(255,255,255,0.1)",
+                    "borderwidth": 1.5,
+                    "bordercolor": card_border.split()[2] if len(card_border.split()) > 2 else "#CBD5E1",
                     "steps": [
-                        {"range": [90, 95], "color": "rgba(245, 158, 11, 0.15)"},
-                        {"range": [95, 100], "color": "rgba(16, 185, 129, 0.15)"}
+                        {"range": [90, 95], "color": "rgba(245, 158, 11, 0.2)"},
+                        {"range": [95, 100], "color": "rgba(16, 185, 129, 0.2)"}
                     ]
                 }
             ))
@@ -1317,25 +1322,25 @@ with tab_sim:
                     <span class="soc-badge" style="background:{m_info['color']}22; border-color:{m_info['color']}66; color:{text_main};">
                         Rank #{m_info['rank']} - {m_info['badge']}
                     </span>
-                    <span style="font-size:11px; font-family:'JetBrains Mono'; color:#10B981; font-weight:700;">
+                    <span style="font-size:11px; font-family:'JetBrains Mono'; color:#10B981; font-weight:800;">
                         CV Δ {m_info['delta']:.6f}
                     </span>
                 </div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px; font-size:12px;">
                     <div style="background:{pill_bg}; padding:8px; border-radius:8px; border:{pill_border};">
-                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase; font-weight:700;">F1-Score</div>
+                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase; font-weight:800;">F1-Score</div>
                         <div style="font-weight:800; color:{text_main}; font-size:15px; font-family:'JetBrains Mono';">{m_info['f1']:.4f}</div>
                     </div>
                     <div style="background:{pill_bg}; padding:8px; border-radius:8px; border:{pill_border};">
-                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase; font-weight:700;">5-Fold CV Acc</div>
+                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase; font-weight:800;">5-Fold CV Acc</div>
                         <div style="font-weight:800; color:{text_main}; font-size:15px; font-family:'JetBrains Mono';">{m_info['cv_acc']*100:.2f}%</div>
                     </div>
                     <div style="background:{pill_bg}; padding:8px; border-radius:8px; border:{pill_border};">
-                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase; font-weight:700;">Precision</div>
+                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase; font-weight:800;">Precision</div>
                         <div style="font-weight:800; color:{text_main}; font-size:15px; font-family:'JetBrains Mono';">{m_info['precision']:.4f}</div>
                     </div>
                     <div style="background:{pill_bg}; padding:8px; border-radius:8px; border:{pill_border};">
-                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase; font-weight:700;">Recall</div>
+                        <div style="color:{text_muted}; font-size:10px; text-transform:uppercase; font-weight:800;">Recall</div>
                         <div style="font-weight:800; color:{text_main}; font-size:15px; font-family:'JetBrains Mono';">{m_info['recall']:.4f}</div>
                     </div>
                 </div>
@@ -1379,33 +1384,49 @@ with tab_bench:
         cv_accs = [v["cv_acc"] * 100 for v in MODEL_REGISTRY.values()]
 
         fig_compare = go.Figure()
+        # Bar with sleek high-contrast styling and clear outlines
         fig_compare.add_trace(go.Bar(
             name="Single-Split (25,257 Test)",
             x=model_names_short,
             y=single_accs,
-            marker_color="#4F46E5",
+            marker=dict(
+                color="#4F46E5",
+                line=dict(color="#818CF8", width=1.5)
+            ),
             text=[f"{val:.2f}%" for val in single_accs],
             textposition="outside",
-            textfont=dict(color=text_main, family="JetBrains Mono", size=10)
+            textfont=dict(color=plotly_font, family="JetBrains Mono", size=10.5)
         ))
         fig_compare.add_trace(go.Bar(
             name="5-Fold Cross-Validation",
             x=model_names_short,
             y=cv_accs,
-            marker_color="#0284C7",
+            marker=dict(
+                color="#0284C7",
+                line=dict(color="#38BDF8", width=1.5)
+            ),
             text=[f"{val:.2f}%" for val in cv_accs],
             textposition="outside",
-            textfont=dict(color=text_main, family="JetBrains Mono", size=10)
+            textfont=dict(color=plotly_font, family="JetBrains Mono", size=10.5)
         ))
         fig_compare.update_layout(
             title="Single-Split vs 5-Fold Cross-Validation Accuracy (Sorted Descending)",
-            title_font=dict(size=13, color=text_main, family="Inter"),
+            title_font=dict(size=13.5, color=plotly_font, family="Inter"),
             barmode="group",
             height=360,
-            margin=dict(l=10, r=10, t=40, b=60),
-            legend=dict(orientation="h", y=-0.2, font=dict(color=text_secondary)),
-            yaxis=dict(range=[88, 101], title="Accuracy (%)", color=text_muted, gridcolor=plotly_grid),
-            xaxis=dict(color=text_muted),
+            margin=dict(l=10, r=10, t=45, b=60),
+            legend=dict(orientation="h", y=-0.22, font=dict(color=plotly_axis, size=11, family="Inter")),
+            yaxis=dict(
+                range=[88, 101.5],
+                title="Accuracy (%)",
+                color=plotly_axis,
+                gridcolor=plotly_grid,
+                tickfont=dict(color=plotly_axis, family="JetBrains Mono")
+            ),
+            xaxis=dict(
+                color=plotly_axis,
+                tickfont=dict(color=plotly_axis, family="Inter", size=11, weight="bold")
+            ),
             paper_bgcolor=plotly_paper,
             plot_bgcolor=plotly_paper,
             font=dict(color=plotly_font)
@@ -1430,20 +1451,26 @@ with tab_bench:
                 theta=categories + [categories[0]],
                 fill='toself',
                 name=m_name.split(" (")[0],
-                line=dict(color=info['color'])
+                line=dict(color=info['color'], width=2)
             ))
         fig_radar.update_layout(
             polar=dict(
-                radialaxis=dict(visible=True, range=[94, 100], color=text_muted, gridcolor=plotly_grid),
-                angularaxis=dict(color=text_secondary, gridcolor=plotly_grid),
+                radialaxis=dict(
+                    visible=True,
+                    range=[94, 100],
+                    color=plotly_axis,
+                    gridcolor=plotly_grid,
+                    tickfont=dict(color=plotly_axis, family="JetBrains Mono")
+                ),
+                angularaxis=dict(color=plotly_axis, gridcolor=plotly_grid, tickfont=dict(color=plotly_axis, size=11, weight="bold")),
                 bgcolor=plotly_paper
             ),
             title="Multi-Metric Defense Capability Radar",
-            title_font=dict(size=13, color=text_main, family="Inter"),
+            title_font=dict(size=13.5, color=plotly_font, family="Inter"),
             height=360,
-            margin=dict(l=30, r=30, t=40, b=30),
+            margin=dict(l=30, r=30, t=45, b=30),
             paper_bgcolor=plotly_paper,
-            legend=dict(orientation="h", y=-0.15, font=dict(color=text_secondary)),
+            legend=dict(orientation="h", y=-0.18, font=dict(color=plotly_axis, size=11)),
             font=dict(color=plotly_font)
         )
         st.plotly_chart(fig_radar, use_container_width=True, config={'displayModeBar': False})
@@ -1476,15 +1503,15 @@ with tab_bench:
             <div class="soc-kpi-label">Selected Classifier</div>
             <div style="font-size:16px; font-weight:800; color:{text_main}; margin-top:4px;">{cm_model_choice}</div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
-                <div style="background:rgba(16,185,129,0.12); border:1.5px solid rgba(16,185,129,0.4); padding:8px; border-radius:8px;">
-                    <div style="font-size:10px; color:#059669; font-weight:800;">FALSE POSITIVES (FP)</div>
+                <div style="background:rgba(16,185,129,0.15); border:1.5px solid rgba(16,185,129,0.4); padding:8px; border-radius:8px;">
+                    <div style="font-size:10px; color:#10B981; font-weight:800;">FALSE POSITIVES (FP)</div>
                     <div style="font-size:18px; font-weight:800; color:{text_main}; font-family:'JetBrains Mono';">{chosen_cm['fp']}</div>
-                    <div style="font-size:10.5px; color:#059669; font-weight:700;">Rate: {fp_rate:.2f}%</div>
+                    <div style="font-size:10.5px; color:#10B981; font-weight:700;">Rate: {fp_rate:.2f}%</div>
                 </div>
-                <div style="background:rgba(239,68,68,0.12); border:1.5px solid rgba(239,68,68,0.4); padding:8px; border-radius:8px;">
-                    <div style="font-size:10px; color:#DC2626; font-weight:800;">FALSE NEGATIVES (FN)</div>
+                <div style="background:rgba(239,68,68,0.15); border:1.5px solid rgba(239,68,68,0.4); padding:8px; border-radius:8px;">
+                    <div style="font-size:10px; color:#EF4444; font-weight:800;">FALSE NEGATIVES (FN)</div>
                     <div style="font-size:18px; font-weight:800; color:{text_main}; font-family:'JetBrains Mono';">{chosen_cm['fn']}</div>
-                    <div style="font-size:10.5px; color:#DC2626; font-weight:700;">Rate: {fn_rate:.2f}%</div>
+                    <div style="font-size:10.5px; color:#EF4444; font-weight:700;">Rate: {fn_rate:.2f}%</div>
                 </div>
             </div>
             <div style="margin-top:12px; font-size:11.5px; color:{text_secondary}; line-height:1.5; font-weight:500;">
@@ -1505,7 +1532,7 @@ with tab_bench:
             x=["Normal (0)", "Attack (1)"],
             y=["Normal (0)", "Attack (1)"],
             text_auto=True,
-            color_continuous_scale=[[0, "#E0E7FF" if not is_dark else "#0F172A"], [1, "#4F46E5"]],
+            color_continuous_scale=hm_colorscale,
             aspect="auto"
         )
         fig_heat.update_layout(
@@ -1514,10 +1541,10 @@ with tab_bench:
             paper_bgcolor=plotly_paper,
             plot_bgcolor=plotly_paper,
             font=dict(color=plotly_font, family="Inter"),
-            xaxis=dict(color=text_secondary, tickfont=dict(size=12, color=text_main)),
-            yaxis=dict(color=text_secondary, tickfont=dict(size=12, color=text_main))
+            xaxis=dict(color=plotly_axis, tickfont=dict(size=12, color=plotly_axis, family="Inter", weight="bold")),
+            yaxis=dict(color=plotly_axis, tickfont=dict(size=12, color=plotly_axis, family="Inter", weight="bold"))
         )
-        fig_heat.update_traces(textfont=dict(size=14, family="JetBrains Mono", color="#FFFFFF" if is_dark else "#0F172A"))
+        fig_heat.update_traces(textfont=dict(size=14.5, family="JetBrains Mono", color="#FFFFFF"))
         st.plotly_chart(fig_heat, use_container_width=True, config={'displayModeBar': False})
 
 # ==============================================================================
@@ -1572,24 +1599,34 @@ with tab_diag:
             x=cluster_0[:, 0], y=cluster_0[:, 1],
             mode="markers",
             name="Cluster 0 (99.3% Malicious Attacks)",
-            marker=dict(color="#EF4444", size=6, opacity=0.8, symbol="circle")
+            marker=dict(color="#EF4444", size=6.5, opacity=0.85, line=dict(color="#B91C1C", width=1))
         ))
         fig_cluster.add_trace(go.Scatter(
             x=cluster_1[:, 0], y=cluster_1[:, 1],
             mode="markers",
             name="Cluster 1 (85.4% Benign Normal)",
-            marker=dict(color="#10B981", size=6, opacity=0.8, symbol="square")
+            marker=dict(color="#10B981", size=6.5, opacity=0.85, line=dict(color="#047857", width=1))
         ))
         fig_cluster.update_layout(
             title="Unsupervised K-Means Clustering (k=2, Silhouette: 0.5512)",
-            title_font=dict(size=13, color=text_main, family="Inter"),
-            xaxis=dict(title="Principal Component 1 (Eigenvector 1)", color=text_muted, gridcolor=plotly_grid),
-            yaxis=dict(title="Principal Component 2 (Eigenvector 2)", color=text_muted, gridcolor=plotly_grid),
+            title_font=dict(size=13.5, color=plotly_font, family="Inter"),
+            xaxis=dict(
+                title="Principal Component 1 (Eigenvector 1)",
+                color=plotly_axis,
+                gridcolor=plotly_grid,
+                tickfont=dict(color=plotly_axis, family="JetBrains Mono")
+            ),
+            yaxis=dict(
+                title="Principal Component 2 (Eigenvector 2)",
+                color=plotly_axis,
+                gridcolor=plotly_grid,
+                tickfont=dict(color=plotly_axis, family="JetBrains Mono")
+            ),
             height=340,
-            margin=dict(l=20, r=20, t=40, b=40),
+            margin=dict(l=20, r=20, t=45, b=40),
             paper_bgcolor=plotly_paper,
             plot_bgcolor=plotly_paper,
-            legend=dict(orientation="h", y=-0.25, font=dict(color=text_secondary)),
+            legend=dict(orientation="h", y=-0.25, font=dict(color=plotly_axis, size=11)),
             font=dict(color=plotly_font)
         )
         st.plotly_chart(fig_cluster, use_container_width=True, config={'displayModeBar': False})
@@ -1609,14 +1646,14 @@ with tab_diag:
         )
         fig_coeff.update_layout(
             title="Multivariate Regression Feature Weights (Target: dst_host_srv_count)",
-            title_font=dict(size=13, color=text_main, family="Inter"),
+            title_font=dict(size=13.5, color=plotly_font, family="Inter"),
             height=340,
-            margin=dict(l=20, r=20, t=40, b=40),
+            margin=dict(l=20, r=20, t=45, b=40),
             coloraxis_showscale=False,
             paper_bgcolor=plotly_paper,
             plot_bgcolor=plotly_paper,
-            xaxis=dict(color=text_muted, gridcolor=plotly_grid),
-            yaxis=dict(color=text_muted),
+            xaxis=dict(color=plotly_axis, gridcolor=plotly_grid, tickfont=dict(color=plotly_axis, family="JetBrains Mono")),
+            yaxis=dict(color=plotly_axis, tickfont=dict(color=plotly_axis, family="JetBrains Mono", size=11, weight="bold")),
             font=dict(color=plotly_font)
         )
         st.plotly_chart(fig_coeff, use_container_width=True, config={'displayModeBar': False})
@@ -1648,14 +1685,14 @@ with tab_diag:
         )
         fig_corr.update_layout(
             title="Pearson Correlation Heatmap (Why Naive Bayes Degrades)",
-            title_font=dict(size=13, color=text_main, family="Inter"),
+            title_font=dict(size=13.5, color=plotly_font, family="Inter"),
             height=340,
-            margin=dict(l=10, r=10, t=35, b=20),
+            margin=dict(l=10, r=10, t=40, b=20),
             paper_bgcolor=plotly_paper,
             plot_bgcolor=plotly_paper,
             font=dict(color=plotly_font, size=10),
-            xaxis=dict(tickangle=-30, color=text_muted),
-            yaxis=dict(color=text_muted)
+            xaxis=dict(tickangle=-30, color=plotly_axis, tickfont=dict(color=plotly_axis, family="JetBrains Mono", size=10)),
+            yaxis=dict(color=plotly_axis, tickfont=dict(color=plotly_axis, family="JetBrains Mono", size=10))
         )
         st.plotly_chart(fig_corr, use_container_width=True, config={'displayModeBar': False})
         st.markdown("<div class='param-pill'><b>Statistical Root Cause:</b> Dense correlation between <code>count</code>, <code>serror_rate</code>, and <code>dst_host_count</code> directly violates Naive Bayes' conditional independence assumption.</div>", unsafe_allow_html=True)
@@ -1759,7 +1796,7 @@ with tab_arch:
                     <span style="color:{text_main}; font-weight:700; font-family:'JetBrains Mono';">UNB NSL-KDD (148.5k records)</span>
                 </div>
             </div>
-            <div style="margin-top:16px; background:rgba(79,70,229,0.12); border:1.5px solid rgba(79,70,229,0.3); border-radius:10px; padding:10px; font-size:11.5px; color:{text_main}; font-weight:500;">
+            <div style="margin-top:16px; background:rgba(79,70,229,0.14); border:1.5px solid rgba(79,70,229,0.35); border-radius:10px; padding:10px; font-size:11.5px; color:{text_main}; font-weight:600;">
                 <b>Production Scalability:</b> In high-throughput enterprise deployments, this Spark MLlib pipeline can scale horizontally across multi-node clusters using Apache Kafka and Spark Structured Streaming for real-time edge packet filtering.
             </div>
         </div>
