@@ -592,18 +592,29 @@ code, kbd, samp, pre, .mono-font {{
     background: {btn_sec_bg} !important;
     border: {btn_sec_border} !important;
     box-shadow: 0 2px 6px rgba(0,0,0,{0.3 if is_dark else 0.05}) !important;
+    color: {btn_sec_text} !important;
+    --text-color: {btn_sec_text} !important;
 }}
-.stButton > button[kind="secondary"] * {{
+.stButton > button[kind="secondary"] *,
+.stButton > button[kind="secondary"] p,
+.stButton > button[kind="secondary"] span,
+.stButton > button[kind="secondary"] div,
+.stButton > button[kind="secondary"] > div > p,
+.stButton > button[kind="secondary"] > div > div > p {{
     color: {btn_sec_text} !important;
     font-weight: 800 !important;
+    -webkit-text-fill-color: {btn_sec_text} !important;
 }}
 .stButton > button[kind="secondary"]:hover {{
     background: {btn_sec_hover_bg} !important;
     border-color: #4F46E5 !important;
     transform: translateY(-1px) !important;
 }}
-.stButton > button[kind="secondary"]:hover * {{
+.stButton > button[kind="secondary"]:hover *,
+.stButton > button[kind="secondary"]:hover p,
+.stButton > button[kind="secondary"]:hover span {{
     color: {"#FFFFFF" if is_dark else "#4F46E5"} !important;
+    -webkit-text-fill-color: {"#FFFFFF" if is_dark else "#4F46E5"} !important;
 }}
 .stButton > button[kind="primary"] {{
     background: linear-gradient(135deg, #4F46E5 0%, #0284C7 100%) !important;
