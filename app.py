@@ -1311,7 +1311,7 @@ with tab_sim:
                     "bar": {"color": m_info["color"], "thickness": 0.35},
                     "bgcolor": kpi_bg,
                     "borderwidth": 1.5,
-                    "bordercolor": card_border.split()[2] if len(card_border.split()) > 2 else "#CBD5E1",
+                    "bordercolor": "rgba(255,255,255,0.14)" if is_dark else "#CBD5E1",
                     "steps": [
                         {"range": [90, 95], "color": "rgba(245, 158, 11, 0.2)"},
                         {"range": [95, 100], "color": "rgba(16, 185, 129, 0.2)"}
