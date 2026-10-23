@@ -611,29 +611,39 @@ code, kbd, samp, pre, .mono-font {{
     transform: translateY(-1px) !important;
 }}
 
-/* Segmented Theme Switcher */
+/* 21st.dev Inspired Minimalist Icon Theme Capsule */
 div[data-testid="stSegmentedControl"] {{
     background: {kpi_bg} !important;
     border: {card_border} !important;
-    border-radius: 12px !important;
-    padding: 3px !important;
+    border-radius: 9999px !important;
+    padding: 3px 5px !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, {0.25 if is_dark else 0.06}) !important;
+    display: inline-flex !important;
+    margin-left: auto !important;
 }}
 div[data-testid="stSegmentedControl"] button {{
-    border-radius: 9px !important;
-    font-weight: 700 !important;
+    border-radius: 9999px !important;
+    padding: 4px 10px !important;
+    min-width: 38px !important;
+    height: 32px !important;
+    border: none !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }}
 div[data-testid="stSegmentedControl"] button p {{
-    color: {text_muted} !important;
-    font-weight: 700 !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+}}
+div[data-testid="stSegmentedControl"] button:hover {{
+    transform: scale(1.12) !important;
 }}
 div[data-testid="stSegmentedControl"] button[aria-checked="true"] {{
-    background: {"#1E293B" if is_dark else "#0F172A"} !important;
-    border: 1px solid {"rgba(255,255,255,0.15)" if is_dark else "#0F172A"} !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+    background: {"linear-gradient(135deg, #1E293B, #0F172A)" if is_dark else "linear-gradient(135deg, #EFF6FF, #DBEAFE)"} !important;
+    border: 1px solid {"rgba(99, 102, 241, 0.5)" if is_dark else "#93C5FD"} !important;
+    box-shadow: {"0 0 12px rgba(99, 102, 241, 0.4)" if is_dark else "0 0 10px rgba(245, 158, 11, 0.35)"} !important;
 }}
 div[data-testid="stSegmentedControl"] button[aria-checked="true"] p {{
-    color: #FFFFFF !important;
-    font-weight: 800 !important;
+    transform: scale(1.05) !important;
 }}
 
 /* Input Labels & Controls */
@@ -857,17 +867,20 @@ div[data-baseweb="popover"] li:hover {{
 # ------------------------------------------------------------------------------
 # 6. HEADER HERO SECTION WITH THEME SWITCHER
 # ------------------------------------------------------------------------------
-hero_col1, hero_col2 = st.columns([1.6, 0.4])
+hero_col1, hero_col2 = st.columns([1.84, 0.16])
 with hero_col2:
-    theme_sel = st.segmented_control(
-        "Display Mode",
-        ["Dark Cyber", "Light Enterprise"],
-        default=st.session_state.theme_mode,
-        key="theme_mode_selector"
+    theme_icon = st.segmented_control(
+        "Theme Toggle",
+        ["🌙", "☀️"],
+        default="🌙" if is_dark else "☀️",
+        label_visibility="collapsed",
+        key="theme_icon_toggle"
     )
-    if theme_sel and theme_sel != st.session_state.theme_mode:
-        st.session_state.theme_mode = theme_sel
-        st.rerun()
+    if theme_icon:
+        desired_mode = "Dark Cyber" if theme_icon == "🌙" else "Light Enterprise"
+        if desired_mode != st.session_state.theme_mode:
+            st.session_state.theme_mode = desired_mode
+            st.rerun()
 
 st.markdown(f"""
 <div class="soc-hero">
