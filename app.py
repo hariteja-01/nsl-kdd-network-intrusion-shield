@@ -196,6 +196,9 @@ def init_app_state():
         st.session_state.has_inspected = False
     if "inspection_result" not in st.session_state:
         st.session_state.inspection_result = None
+    # Snapshot of params used for the LAST inference — used to detect stale results
+    if "last_inferred_params" not in st.session_state:
+        st.session_state.last_inferred_params = None
 
     p = PRESETS[st.session_state.current_preset_key]
     widget_defaults = {
@@ -230,6 +233,7 @@ def apply_scenario_preset(preset_key):
     st.session_state["cfg_dst_host"] = int(p["dst_host"])
     st.session_state.has_inspected = False
     st.session_state.inspection_result = None
+    st.session_state.last_inferred_params = None
 
 init_app_state()
 
@@ -1142,6 +1146,32 @@ with tab_sim:
 
         st.markdown("</div>", unsafe_allow_html=True)
 
+    # ------------------------------------------------------------------
+    # Stale-result guard: if the user has changed ANY widget since the
+    # last inference, reset to standby so they must click EXECUTE again.
+    # ------------------------------------------------------------------
+    _current_params = (
+        st.session_state.get("cfg_protocol"),
+        st.session_state.get("cfg_service"),
+        st.session_state.get("cfg_flag"),
+        st.session_state.get("cfg_model"),
+        st.session_state.get("cfg_duration"),
+        st.session_state.get("cfg_src_bytes"),
+        st.session_state.get("cfg_dst_bytes"),
+        st.session_state.get("cfg_count"),
+        st.session_state.get("cfg_serror"),
+        st.session_state.get("cfg_same_srv"),
+        st.session_state.get("cfg_dst_host"),
+    )
+    if (
+        st.session_state.has_inspected
+        and st.session_state.last_inferred_params is not None
+        and _current_params != st.session_state.last_inferred_params
+    ):
+        # Parameters changed since last EXECUTE — go back to standby
+        st.session_state.has_inspected = False
+        st.session_state.inspection_result = None
+
     # Trigger Inspection Execution
     anim_placeholder = st.empty()
     if run_inspection:
@@ -1194,6 +1224,12 @@ with tab_sim:
             "src_bytes": val_src_bytes,
             "dst_bytes": val_dst_bytes
         }
+        # Snapshot the exact params used so we can detect future widget changes
+        st.session_state.last_inferred_params = (
+            sel_protocol, sel_service, sel_flag, sel_model,
+            val_duration, val_src_bytes, val_dst_bytes,
+            val_count, val_serror, val_same_srv, val_dst_host,
+        )
 
     # Render Display: Either Standby or Inspected Results
     st.markdown("<div style='margin-top:20px;'></div>", unsafe_allow_html=True)
